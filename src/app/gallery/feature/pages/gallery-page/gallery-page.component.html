@@ -1,0 +1,49 @@
+<div *ngIf="true" class="container">
+  <div *ngIf="isAdmin()">
+    <div class="row my-5">
+      <div class="col-lg-4 col-md-4 col-sm-12">
+        <button routerLink="/picture/new" type="button" class="btn btn-primary">Add new picture</button>
+      </div>
+      <div class="col-lg-4 col-md-4 col-sm-12">
+        <button routerLink="/category/new" type="button" class="btn btn-primary">Add new category</button>
+      </div>
+      <div class="col-lg-4 col-md-4 col-sm-12">
+        <button routerLink="/category" type="button" class="btn btn-primary">View categories</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="row my-3">
+    <app-selectable-buttons-bar [btnType]="'category'" [buttonNames]="categoryNameList" (selectedButtonNamesEvent)="getSelectedCategoryNames($event)"></app-selectable-buttons-bar>
+  </div>
+  <div class="row my-3">
+    <app-selectable-buttons-bar [btnType]="'year'" [buttonNames]="pictureYearsList" (selectedButtonNamesEvent)="getSelectedYears($event)"></app-selectable-buttons-bar>
+  </div>
+
+  <div
+    class="search-results"
+    infiniteScroll
+    [infiniteScrollDistance]="2"
+    [infiniteScrollThrottle]="50"
+    (scrolled)="onScroll()">
+
+    <div class="row gy-4 gx-4 main-panel">
+      <div *ngFor="let picture of loadedPictures" class="col-sm-6 col-md-6 col-lg-4">
+        <div>
+          <div class="picture-item" tabindex="0" (click)="showPictureDetails(picture)">
+            <div class="darken-layer">
+              <div *ngIf="isAdmin()" ngbDropdown class="options-dots" (click)="open($event)" >
+                <mat-icon id="dropdownBasic1" ngbDropdownToggle>more_vert</mat-icon>
+                <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+                  <button type="button" (click)="editPicture(picture)" ngbDropdownItem>Edit picture</button>
+                  <button type="button" (click)="deletePicture(picture)" ngbDropdownItem>Delete picture</button>
+                </div>
+              </div>
+            </div>
+            <img src="{{ picture.image }}">
+            <div class="gallery-item-info"></div>
+          </div>
+      </div>
+    </div>
+  </div>
+</div>

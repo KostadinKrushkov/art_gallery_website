@@ -1,0 +1,36 @@
+<div class="categories-grid">
+  <div *ngFor="let category of categories">
+    <div class="row">
+      <div class="col-2">
+        <label>Title</label>
+        <p>{{ category.name }}</p>
+      </div>
+
+      <div class="col-2">
+        <label>Weight</label>
+        <p>{{ category.weight }}</p>
+      </div>
+
+      <div class="col-2">
+        <label>Is subcategory</label>
+        <p>{{ category.is_subcategory === 1 }}</p>
+      </div>
+
+      <div class="col-2">
+        <label>Enabled</label>
+        <p>{{ category.enabled === 1 }}</p>
+      </div>
+
+      <div class="col-2">
+        <button class="btn btn-primary" (click)="editCategory(category.name)">Edit category</button>
+
+      </div>
+
+      <div class="col-2">
+        <button class="btn btn-danger" (click)="deleteCategory(category.name)">Delete category</button>
+      </div>
+
+      <hr>
+    </div>
+  </div>
+</div>

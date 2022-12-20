@@ -1,0 +1,40 @@
+<form [formGroup]="myForm" (ngSubmit)="onSubmit(myForm)">
+  <div class="row" >
+      <label>Name:</label>
+      <input formControlName="name" placeholder="Category name">
+      <span class="text-danger" *ngIf="(registerFormControl['name'].value.length === 0 && (registerFormControl['name'].touched || submitted))">*Name is required</span>
+  </div>
+
+  <div class="row">
+    <label>Weight:
+    <span style="color: rgb(167, 162, 162)">(Leaving empty number would result in being the last category)</span>
+    </label>
+    <input formControlName="weight" placeholder="Number">
+  </div>
+
+  <div class="row">
+    <div class="col-8 my-2">
+      <label>
+        <mat-button-toggle-group formControlName="enabled" name="enabled" aria-label="enabled" multiple="false" value="enabled">
+          <mat-button-toggle value="enabled">Enabled</mat-button-toggle>
+          <mat-button-toggle value="disabled">Disabled</mat-button-toggle>
+          </mat-button-toggle-group>
+      </label>
+    </div>
+
+    <div class="col-8 my-2">
+      <label>
+        <mat-button-toggle-group formControlName="is_subcategory" name="is_subcategory" aria-label="enabled" multiple="false" value="category">
+          <mat-button-toggle value="category">Category</mat-button-toggle>
+          <mat-button-toggle value="subcategory">Subcategory</mat-button-toggle>
+          </mat-button-toggle-group>
+      </label>
+    </div>
+  </div>
+
+  <div class="row button-row">
+    <div class="col-4">
+      <button class="btn btn-primary" type="submit">{{ buttonMessage }}</button>
+    </div>
+  </div>
+</form>

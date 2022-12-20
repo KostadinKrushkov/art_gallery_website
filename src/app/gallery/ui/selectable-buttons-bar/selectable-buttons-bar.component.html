@@ -1,0 +1,11 @@
+<div class="btn-toolbar">
+  <div *ngFor="let buttonName of buttonNames">
+    <button
+      type="button"
+      class="selectable-button mx-1"
+      [ngClass]="{selected: isButtonSelected(buttonName), bigger: btnType === 'category'}"
+      (click)="clickButton(buttonName); sendSelectedButtonsEvent()">{{ buttonName }}
+    </button>
+  </div>
+
+</div>

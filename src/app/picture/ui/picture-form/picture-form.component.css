@@ -1,0 +1,35 @@
+.uploaded-image {
+  /* max-width: 500px;
+  max-height: 1000px; */
+  max-width: 60%;
+  max-height: 60%;
+}
+
+.flex-container {
+  display: flex;
+  flex-direction: row;
+}
+
+button.btn {
+  justify-content: center;
+  align-items: center;
+}
+
+.image-div {
+  max-width: 500px;
+  max-height: 1000px;
+}
+
+.flex-image-div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.flex-to-center-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}

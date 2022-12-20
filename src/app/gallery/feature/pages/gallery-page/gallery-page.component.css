@@ -1,0 +1,40 @@
+.container {
+  display: relative;
+  padding-left: 10%;
+  padding-right: 10%;
+}
+
+.col-sm-12 {
+  margin-top: 2%;
+}
+
+
+.picture-item {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  aspect-ratio: 1;
+}
+
+.picture-item>img {
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+}
+
+.darken-layer {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0);
+}
+.darken-layer:hover {
+  background-color: rgba(0,0,0,0.3);
+}
+
+.options-dots {
+  position: absolute;
+  bottom: 2%;
+  right: 2%;
+}
+

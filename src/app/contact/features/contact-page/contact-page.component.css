@@ -1,0 +1,33 @@
+.fa-instagram {
+  content: '\f16d';
+}
+
+.icon {
+  vertical-align: middle;
+  font-size: 2.5em;
+}
+.text {
+  font-family: "Courier-new";
+}
+.additional-info {
+  display: inline-block;
+  /* margin: 40px;
+  padding: 10px; */
+}
+
+.clickable {
+  cursor: pointer;
+  font-size: 1.3em;
+}
+
+div.clickable {
+  padding-top: 1%;
+}
+
+.clickable:hover {
+  color: rgb(0, 0, 0, 0.4);
+}
+
+a {
+  all: unset;
+}

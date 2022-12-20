@@ -1,0 +1,17 @@
+.flex-container {
+  display: flex;
+  align-items: center;
+}
+
+.flex-div {
+  justify-content: center;
+  flex-direction: row;
+}
+
+.text-description {
+  font-size: 1.25em;
+  /* text-align: left; */
+  /* align-items: center;
+  justify-content: center;
+  align-self: flex-start; */
+}

@@ -1,0 +1,31 @@
+:root {
+  --primary-bg-color: #bd5d5d73; /* TODO find out if you can use variables since it didn't work for me */
+}
+
+.flex-nav-wrapper {
+  padding-bottom: 10%;
+  position: relative;
+  display: flex;
+  background-color: #bd5d5d73;
+}
+
+.container {
+  padding-left: 56px;
+  min-height: 60rem; /* TODO ask nikola how to css height based on size */
+}
+
+app-header {
+  height: 100%;
+  position: fixed;
+  z-index: 10;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.vl {
+  border-left: 2px solid gray;
+  height: 100%;
+}
+
+

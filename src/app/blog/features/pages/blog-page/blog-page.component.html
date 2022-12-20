@@ -1,0 +1,24 @@
+<div class="container">
+  <div class="row my-5">
+    <div class="col-6">
+      <button routerLink="/blog/new" type="button" class="btn btn-primary">Create new blog</button>
+    </div>
+    <div class="col-6">
+      <button routerLink="/blog/edit/first" type="button" class="btn btn-primary">Edit blog first</button>
+    </div>
+  </div>
+</div>
+
+<p>blog-page works!</p>
+
+<div *ngFor="let blog of savedBlogs">
+  <app-blog-row-card [blog]="blog"></app-blog-row-card>
+  <!-- <h1>{{ blog.title }}</h1>>
+  <p>{{ blog.content }}</p>
+  <div [innerHTML]="this.sanitizer.bypassSecurityTrustHtml(blog.content)"></div>
+
+  <img src={{blog.image}} alt=""> -->
+  <br>
+  <br>
+</div>
+<!-- <button (click)="postBlog()">AAAA</button> -->

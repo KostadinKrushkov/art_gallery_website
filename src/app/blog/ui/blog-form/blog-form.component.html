@@ -1,0 +1,63 @@
+<!-- TODO find a way to store the images locally so later on you can send them to back end to be saved -->
+
+<div class="container">
+  <hr>
+
+  <div *ngIf="registerFormControl['content'].touched" class="presented-blog row">
+    <div [innerHTML]="this.sanitizer.bypassSecurityTrustHtml(this.htmlPresenterString)"></div>
+  </div>
+
+  <div class="blog-editor row">
+    <form [formGroup]="myForm">
+      <input [formControl]="myForm.controls.title"/>
+      <p class="error-text" *ngIf="registerFormControl['title'].touched && registerFormControl['title'].hasError('required')">
+        Title is required
+      </p>
+
+      <editor #editor [(ngModel)]="content"
+      [formControl]="myForm.controls.content"
+      [init]="{
+        height: 500,
+        menubar: false,
+        suffix: '.min',
+        base_url: '/tinymce',
+        plugins: [
+
+        ],
+        toolbar:
+          'undo redo | formatselect | bold italic backcolor | \
+          alignleft aligncenter alignright alignjustify | \
+          bullist numlist outdent indent | removeformat | help | save'
+      }"
+      [inline]="false"
+      (onInit)="handleEditorInit($event)"
+      (onSaveContent)="onSaveContent()"
+      apiKey="f64oct4fffj54mkxzyyj0ixegdiqysufc6nw4nopvgj7apnp"
+      initialValue=""
+      outputFormat="html"
+
+    ></editor>
+
+     <p class="error-text" *ngIf="registerFormControl['content'].touched && registerFormControl['content'].hasError('required')">
+        This form is required
+     </p>
+
+    <label>
+      <input id="uploadedFile" type="file" (change)="onFileSelect($event)">
+      <div class="row my-5">
+        <img class="uploaded-image" *ngIf="imageFound" [src]="imgSource">
+        <span class="text-danger" *ngIf="imageErrorMessage !== ''"> *{{ imageErrorMessage }}</span>
+      </div>
+    </label>
+
+    <br>
+    <button type="button" class="btn btn-danger" (click)="removeUploadedImage()">Remove image</button>
+
+    <div class="row">
+      <div class="col d-flex justify-content-center">
+        <button type="submit" class="btn btn-primary center-btn my-5 " (click)="onSubmit()">{{ buttonMessage }}</button>
+      </div>
+    </div>
+    </form>
+  </div>
+</div>

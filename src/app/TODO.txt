@@ -1,0 +1,12 @@
+TODOs:
+- Make sure that the lazy loading is working correctly for all modules
+- Add notification system on receiving response for put post and delete requests as well as general error handling
+- Hold information regarding the logged in user so you can logout -> get it from the session somehow
+- Add are you sure popup for logout before sending the request
+- Protect the website from CSRF ( look into how )
+- Figure out on edit why the toggle buttons aren't updated when data is passed
+
+Polish up todos:
+- Disable the register button during waiting for the response
+
+DONE:
