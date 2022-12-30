@@ -8,3 +8,5 @@ npm install @angular/material@14.2.4
 npm install -g http-server
 npm install angular-notifier@12.0.0
 npm install @angular/localize@14.2.0
+
+To view the backend you can visit https://github.com/KostadinKrushkov/art_gallery_backend
