@@ -7,7 +7,7 @@ import { UIBlogComponentsModule } from 'src/app/blog/ui/ui-blog-components.modul
 
 const routes: Route[] = [
   {
-    path: '', component: CreateBlogPageComponent
+    path: '', pathMatch: 'full', component: CreateBlogPageComponent
   }
 ]
 

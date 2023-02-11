@@ -26,8 +26,9 @@ function passwordValidator(control: FormControl) {
 })
 export class RegisterPageComponent implements OnInit {
   public static minPasswordLength = 10;
-  registerForm: FormGroup | any;
-  submitted = false;
+  public registerForm: FormGroup | any;
+  public submitted = false;
+  public siteKey: string = '6Lfu-WYkAAAAAGzn54L1sUWnYN3Vbb2dkn99h-dF';
 
   constructor(private formBuilder: FormBuilder, private authService: AuthenticationService, private router: Router, private popupNotificationService: PopupNotificationsService) { }
 
@@ -37,6 +38,7 @@ export class RegisterPageComponent implements OnInit {
         email: ['', [Validators.required, Validators.email]],
         password: ['', [Validators.required, passwordValidator, Validators.minLength(RegisterPageComponent.minPasswordLength), ]],
         confirmPassword: ['', Validators.required],
+        recaptcha: ['', Validators.required],
     }, {
         validator: MustMatch('password', 'confirmPassword')
     });
@@ -46,12 +48,8 @@ export class RegisterPageComponent implements OnInit {
   isPasswordValid() {
     let password = this.registerForm.value['password'];
     var hasNumber = /\d/;
-    console.log(hasNumber.test(password));
-
-    let valid = password.length > RegisterPageComponent.minPasswordLength && hasNumber.test(password)
-    // console.log(valid);
-
-    return valid;
+    // TODO find out how to add the special character check as well
+    return password.length > RegisterPageComponent.minPasswordLength && hasNumber.test(password);
   }
 
   // convenience getter for easy access to form fields
@@ -64,21 +62,14 @@ export class RegisterPageComponent implements OnInit {
         return;
     }
 
-    console.log(this.registerForm.value);
     const user = {
       username: this.registerForm.value['username'],
       password: this.registerForm.value['password'],
       email: this.registerForm.value['email'],
     } as User
 
-    this.authService.register(user).subscribe({
-      next: (response) => {
-        this.popupNotificationService.showResponse(response);
-        this.router.navigate(['/home']);
-      }, error: (error) => {
-        this.popupNotificationService.showResponse(error);
-      }, complete: () => {}
-    })
+    const recaptcha = this.registerForm.value['recaptcha'];
+    this.authService.register(user, recaptcha);
   }
 
   onReset() {

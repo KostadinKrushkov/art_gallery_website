@@ -50,6 +50,8 @@ export class SelectableButtonsBarComponent implements OnInit {
 
   clickButton(buttonName: string) {
     const clickedButtonIndex = this.buttonNames.indexOf(buttonName);
+    const allButtonIndex = this.buttonNames.indexOf('All');
+
     if (this.activeButtonIndexes.includes(clickedButtonIndex)) {
       // Disable button
       const index = this.activeButtonIndexes.indexOf(clickedButtonIndex);
@@ -57,10 +59,14 @@ export class SelectableButtonsBarComponent implements OnInit {
     } else {
       // Enable button and remove all if set
       this.activeButtonIndexes.push(clickedButtonIndex);
-      let indexOfAllBtn = this.activeButtonIndexes.indexOf(this.buttonNames.indexOf('All'));
+      let indexOfAllBtn = this.activeButtonIndexes.indexOf(allButtonIndex);
       if (buttonName !== 'All' && this.activeButtonIndexes.includes(indexOfAllBtn)) {
         this.activeButtonIndexes.splice(indexOfAllBtn, 1);
       }
+    }
+
+    if (this.activeButtonIndexes.length === 0) {
+      this.activeButtonIndexes.push(allButtonIndex); // When the user deselects the fillters to automatically select 'All' as the option
     }
   }
 }

@@ -1,3 +1,5 @@
+// import { BasicResponse } from '../../../shared/models/authentication.models';
+import { BasicResponse } from 'src/app/shared/models/authentication.models';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { PopupNotificationsService } from 'src/app/shared/services/popup-notifications.service';
@@ -13,13 +15,13 @@ export class ContactPageComponent implements OnInit {
   public personalEmail = 'rumenplamenovart@gmail.com';
   public instagramURL = 'https://www.instagram.com/rumenplamenovart/'
   public submitted = false;
+  public siteKey: string = '6Lfu-WYkAAAAAGzn54L1sUWnYN3Vbb2dkn99h-dF';
 
-  public siteKey: any;
   public myForm = new FormGroup({
     email: new FormControl('', [Validators.required,  Validators.email]),
     name: new FormControl('', Validators.required),
     message: new FormControl('', Validators.required),
-    // recaptcha: new FormControl('', Validators.required), TODO add recaptcha
+    recaptcha: new FormControl('', Validators.required),
   });
 
   constructor(private popupNotificationsService: PopupNotificationsService, private smtpService: SmtpService) { }
@@ -27,7 +29,7 @@ export class ContactPageComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  get registerFormControl() {
+  get formControl() {
     return this.myForm.controls;
   }
 
@@ -37,11 +39,18 @@ export class ContactPageComponent implements OnInit {
     const email = this.myForm.controls['email'].value;
     const name = this.myForm.controls['name'].value;
     const message = this.myForm.controls['message'].value;
+    const recaptcha = this.myForm.controls['recaptcha'].value;
 
-    if (this.myForm.valid && email && name && message) {
-      this.smtpService.sendEmail(email, name, message);
-    } else {
-      this.popupNotificationsService.showWarningMessage("Please fill all required fields.");
+    if (this.myForm.valid && email && name && message && recaptcha) {
+      this.smtpService.sendEmail(email, name, message, recaptcha).subscribe({
+        next: (response: any) => {
+          this.popupNotificationsService.showSuccessfulMessage(response.message);
+          this.myForm.reset();
+          this.submitted = false;
+        }, error: (error) => {
+          this.popupNotificationsService.showErrorMessage(error.message); // test when the ssl is added to see the correct error message
+        }, complete: () => {}
+      })
     }
   }
 

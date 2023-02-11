@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 
 import { Routes, RouterModule } from '@angular/router';
+import { AuthenticationGuardService } from 'src/app/auth/data-access/authentication-guard.service';
+import { AuthenticationRoleConstants } from 'src/app/shared/constants/constants';
 
 const routes: Routes = [
   {
@@ -11,12 +13,20 @@ const routes: Routes = [
       ),
   }, {
     path: 'new',
+    canActivate: [AuthenticationGuardService],
+    data: {
+      role: [AuthenticationRoleConstants.ADMIN_ROLE]
+    },
     loadChildren: () =>
     import('../pages/create-category-page/create-category-page.module').then(
       (m) => m.CreateCategoryPageModule
       ),
   }, {
     path: 'edit/:category-name',
+    canActivate: [AuthenticationGuardService],
+    data: {
+      role: [AuthenticationRoleConstants.ADMIN_ROLE]
+    },
     loadChildren: () =>
     import('../pages/edit-category-page/edit-category-page.module').then(
       (m) => m.EditCategoryPageModule
@@ -31,7 +41,7 @@ const routes: Routes = [
   imports: [
     RouterModule.forChild(routes),
   ],
-  providers: [],
+  providers: [AuthenticationGuardService],
   bootstrap: []
 })
 export class CategoryRoutingModule { }

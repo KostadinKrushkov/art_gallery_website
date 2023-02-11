@@ -3,11 +3,13 @@ import { CommonModule } from '@angular/common';
 import { HeaderComponent } from './ui/header/header.component';
 import { CoreComponentsModule } from './core-components.module';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { ParseTimestamp } from 'src/app/shared/utils/pipes';
 
 
 @NgModule({
   declarations: [
-    HeaderComponent
+    HeaderComponent,
+    ParseTimestamp,
   ],
   imports: [
     CommonModule,
@@ -15,6 +17,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     NgbModule,
   ], exports: [
     HeaderComponent,
+    ParseTimestamp,
   ]
 })
 export class SharedComponentsModule { }

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormActionsConstants } from 'src/app/shared/constants/constants';
 
 @Component({
   selector: 'app-create-blog-page',
@@ -6,6 +7,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./create-blog-page.component.css']
 })
 export class CreateBlogPageComponent implements OnInit {
+  public mode = FormActionsConstants.CREATE;
 
   constructor() { }
 

@@ -35,6 +35,18 @@
               </div>
           </div>
 
+          <div class="form-row">
+            <div class="form-group col my-4">
+              <ngx-recaptcha2
+              [siteKey]="siteKey"
+              formControlName="recaptcha">
+              </ngx-recaptcha2>
+              <div *ngIf="submitted && form.recaptcha.errors" class="text-danger">
+                <div>*Please retry the reCAPTCHA</div>
+              </div>
+            </div>
+          </div>
+
           <div class="mt-3 text-center">
               <button class="btn btn-primary mx-5 my-1">Register</button>
               <button class="btn btn-secondary mx-5 my-1" type="reset" (click)="onReset()">Reset</button>

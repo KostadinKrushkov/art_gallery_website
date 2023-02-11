@@ -17,7 +17,7 @@ export class BlogFormComponent implements OnInit {
   private editorSubject: Subject<any> = new AsyncSubject();
   public imageErrorMessage = '';
   public imageFound = false;
-  public imgSource: string | null | ArrayBuffer = '';
+  public imgSource: string | null | ArrayBuffer = null;
   public submitted = false;
   public buttonMessage = '';
 
@@ -26,9 +26,10 @@ export class BlogFormComponent implements OnInit {
 
   @ViewChild('editor') editor: any;
 
-  content: any = '';
-  title: any = '';
-  htmlPresenterString: any;
+  content: string = '';
+  title: string = '';
+  htmlPresenterString: string = '';
+  successfully_saved_blog: Blog | null = null;
 
   public myForm = new FormGroup({
     title: new FormControl('', Validators.required),
@@ -52,7 +53,8 @@ export class BlogFormComponent implements OnInit {
   }
 
   setBlogFormData(blogTitle: string) {
-    this.dataStorageService.getBlog(blogTitle).subscribe(response => { // TODO fix
+    this.dataStorageService.getBlog(blogTitle).subscribe(
+      response => {
       if (response.json) {
         const blog = response.json
         this.myForm.setValue({
@@ -72,24 +74,34 @@ export class BlogFormComponent implements OnInit {
     return this.myForm.controls;
   }
 
-  onSubmit() {
-
-  }
-
   handleEditorInit(e: any) {
     this.editorSubject.next(e.editor);
     this.editorSubject.complete();
   }
 
   onSaveContent() {
-    this.content = this.myForm.controls['content'].value;
-    this.title = this.myForm.controls['title'].value;
+    if (this.successfully_saved_blog) {
+      this.mode = FormActionsConstants.UPDATE;
+    }
+
+    if (this.myForm.controls['content'].value) {
+      this.content = this.myForm.controls['content'].value;
+    }
+
+    if (this.myForm.controls['title'].value) {
+      this.title = this.myForm.controls['title'].value;
+    }
 
     const blog = {
       'content': this.content,
       'title': this.title,
       'image': this.imgSource
     } as Blog
+
+    if (this.content.length === 0 || this.title.length == 0) {
+      this.popupNotificationService.showWarningMessage("You need to fill both title and content boxes.");
+      return;
+    }
 
     this.dataStorageService.getBlogs().subscribe(response => {
       let foundBlog = false;
@@ -99,8 +111,9 @@ export class BlogFormComponent implements OnInit {
         }
       }}
 
-      if (!foundBlog) {
+      if (this.mode === FormActionsConstants.CREATE) {
           this.dataStorageService.saveBlog(blog).subscribe(response => {
+            this.successfully_saved_blog = blog;
             this.popupNotificationService.showResponse(response);
           }, (error) => {
             this.popupNotificationService.showResponse(error);

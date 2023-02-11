@@ -5,6 +5,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { CoreComponentsModule } from 'src/app/shared/core-components.module';
 import { PictureDetailsPopupComponent } from './picture-details-popup/picture-details-popup.component';
 import { SelectableButtonsBarComponent } from './selectable-buttons-bar/selectable-buttons-bar.component';
+import { SharedComponentsModule } from 'src/app/shared/shared-components.module';
 
 
 @NgModule({
@@ -19,6 +20,7 @@ import { SelectableButtonsBarComponent } from './selectable-buttons-bar/selectab
     ReactiveFormsModule,
     FormsModule,
     HttpClientModule,
+    SharedComponentsModule,
   ], exports: [
     SelectableButtonsBarComponent,
   ]

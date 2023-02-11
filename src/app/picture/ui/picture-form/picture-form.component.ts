@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { DomSanitizer } from '@angular/platform-browser';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { FormActionsConstants } from 'src/app/shared/constants/constants';
 import { DataStorageService } from 'src/app/shared/data-access/data-storage.service';
 import { Picture } from 'src/app/shared/models/entity.models';
@@ -26,8 +26,10 @@ export class PictureFormComponent implements OnInit {
   public categoriesNames: string[] = [];
 
   submitted = false;
+  is_loading = false;
 
-  constructor(private route: ActivatedRoute, private _sanitizer: DomSanitizer, private dataStorageService: DataStorageService, private popupNotificationService: PopupNotificationsService) {
+  constructor(private route: ActivatedRoute, private router: Router, private _sanitizer: DomSanitizer,
+    private dataStorageService: DataStorageService, private popupNotificationService: PopupNotificationsService) {
     this.myForm = new FormGroup({
       title: new FormControl('', Validators.required),
       description: new FormControl('',  Validators.required),
@@ -77,7 +79,6 @@ export class PictureFormComponent implements OnInit {
     this.dataStorageService.getPicture(pictureTitle).subscribe(response => {
       if (response.json) {
         const picture = response.json
-        console.log(picture);
 
         this.myForm.setValue({
           title: picture.title,
@@ -85,12 +86,12 @@ export class PictureFormComponent implements OnInit {
           category: picture.category,
         });
 
-        this.receivedImage = picture.image;
+        this.imgUrl = picture.image;
       } else {
         this.popupNotificationService.showErrorMessage("Could not find a picutre with title " + pictureTitle)
       }
     }, (error) => {
-      this.popupNotificationService.showResponse(error);
+      this.popupNotificationService.showErrorMessage(error);
     });
   }
 
@@ -99,29 +100,35 @@ export class PictureFormComponent implements OnInit {
   }
 
   onSubmit(form: FormGroup) {
-    console.log(this.categoriesNames);
     this.submitted = true;
-    // console.log(`Title: ${form.controls['title'].value}`);
-    // console.log(`Description: ${form.controls['description'].value}`);
-    // console.log(`Category ${form.controls['category'].value}`);
-    // console.log(form.controls['description'].value.length)
 
     if (form.valid) {
-        console.log(typeof this.imgUrl)
+        this.is_loading = true;
+
         let picture = {
           image: this.imgUrl,
           title: form.controls['title'].value,
           description: form.controls['description'].value,
           category: form.controls['category'].value,
         } as Picture
-        this.dataStorageService.savePicture(picture).subscribe(response => {
-        // console.log(response);
-        // this.receivedImage = response.json.image;
+
+        let request_observable;
+        if (this.mode === FormActionsConstants.CREATE) {
+          request_observable = this.dataStorageService.savePicture(picture);
+        } else {
+          request_observable = this.dataStorageService.updatePicture(picture);
+        }
+
+        request_observable.subscribe(response => {
         this.popupNotificationService.showResponse(response);
+        this.router.navigate(['/gallery']);
+
       }, (error) => {
         this.popupNotificationService.showResponse(error);
+        this.is_loading = false;
       });
     }
+
   }
 
   onFileSelect(event: any) {

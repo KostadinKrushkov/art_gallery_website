@@ -1,63 +1,75 @@
 <!-- TODO find a way to store the images locally so later on you can send them to back end to be saved -->
 
 <div class="container">
-  <hr>
 
-  <div *ngIf="registerFormControl['content'].touched" class="presented-blog row">
-    <div [innerHTML]="this.sanitizer.bypassSecurityTrustHtml(this.htmlPresenterString)"></div>
+  <div class="my-3">
+    <i *ngIf="this.htmlPresenterString.length === 0">The blog content is going to be show here once you save or update a blog.</i>
+
+    <div *ngIf="registerFormControl['content'].touched && this.htmlPresenterString.length > 0" class="presented-blog row">
+      <div [innerHTML]="this.sanitizer.bypassSecurityTrustHtml(this.htmlPresenterString)"></div>
+    </div>
+
+    <hr>
   </div>
+
 
   <div class="blog-editor row">
     <form [formGroup]="myForm">
-      <input [formControl]="myForm.controls.title"/>
-      <p class="error-text" *ngIf="registerFormControl['title'].touched && registerFormControl['title'].hasError('required')">
-        Title is required
-      </p>
-
-      <editor #editor [(ngModel)]="content"
-      [formControl]="myForm.controls.content"
-      [init]="{
-        height: 500,
-        menubar: false,
-        suffix: '.min',
-        base_url: '/tinymce',
-        plugins: [
-
-        ],
-        toolbar:
-          'undo redo | formatselect | bold italic backcolor | \
-          alignleft aligncenter alignright alignjustify | \
-          bullist numlist outdent indent | removeformat | help | save'
-      }"
-      [inline]="false"
-      (onInit)="handleEditorInit($event)"
-      (onSaveContent)="onSaveContent()"
-      apiKey="f64oct4fffj54mkxzyyj0ixegdiqysufc6nw4nopvgj7apnp"
-      initialValue=""
-      outputFormat="html"
-
-    ></editor>
-
-     <p class="error-text" *ngIf="registerFormControl['content'].touched && registerFormControl['content'].hasError('required')">
-        This form is required
-     </p>
-
-    <label>
-      <input id="uploadedFile" type="file" (change)="onFileSelect($event)">
-      <div class="row my-5">
-        <img class="uploaded-image" *ngIf="imageFound" [src]="imgSource">
-        <span class="text-danger" *ngIf="imageErrorMessage !== ''"> *{{ imageErrorMessage }}</span>
+      <div>
+        <input class="my-3" [readonly]="this.successfully_saved_blog !== null" [formControl]="myForm.controls.title"/>
+        <p class="text-secondary" *ngIf="successfully_saved_blog !== null">*Title has been set and cannot be changed. If you made a typo delete this blog and create another one.</p>
+        <p class="text-danger" *ngIf="registerFormControl['title'].touched && registerFormControl['title'].hasError('required')">*Title is required</p>
       </div>
-    </label>
 
-    <br>
-    <button type="button" class="btn btn-danger" (click)="removeUploadedImage()">Remove image</button>
+      <div class="my-3">
+        <editor #editor [(ngModel)]="content"
+        [formControl]="myForm.controls.content"
+        [init]="{
+          height: 500,
+          menubar: false,
+          suffix: '.min',
+          base_url: '/tinymce',
+          plugins: [
 
-    <div class="row">
-      <div class="col d-flex justify-content-center">
-        <button type="submit" class="btn btn-primary center-btn my-5 " (click)="onSubmit()">{{ buttonMessage }}</button>
+          ],
+          toolbar:
+            'undo redo | formatselect | bold italic backcolor | \
+            alignleft aligncenter alignright alignjustify | \
+            bullist numlist outdent indent | removeformat | help | save'
+        }"
+        [inline]="false"
+        (onInit)="handleEditorInit($event)"
+        (onSaveContent)="onSaveContent()"
+        apiKey="f64oct4fffj54mkxzyyj0ixegdiqysufc6nw4nopvgj7apnp"
+        initialValue=""
+        outputFormat="html"
+
+      ></editor>
+
+       <p class="text-danger" *ngIf="registerFormControl['content'].touched && registerFormControl['content'].hasError('required')">
+          *This form is required
+       </p>
       </div>
-    </div>
+
+      <div>
+        <label>
+          <input id="uploadedFile" type="file" (change)="onFileSelect($event)">
+          <div class="row my-5">
+            <img class="uploaded-image" *ngIf="imageFound" [src]="imgSource">
+            <span class="text-danger" *ngIf="imageErrorMessage !== ''"> *{{ imageErrorMessage }}</span>
+          </div>
+        </label>
+
+        <br>
+
+        <button class="m-3" [disabled]="imgSource === null"  type="button" class="btn btn-danger" (click)="removeUploadedImage()">Remove image</button>
+      </div>
+
+      <div class="row">
+        <div class="col d-flex justify-content-center">
+          <button type="submit" class="btn btn-primary center-btn my-5 " (click)="onSaveContent()">{{ buttonMessage }}</button>
+        </div>
+      </div>
     </form>
   </div>
 </div>

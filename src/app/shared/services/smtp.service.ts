@@ -6,14 +6,9 @@ import { ServerConfigConstants } from 'src/app/shared/constants/constants';
   providedIn: 'root'
 })
 export class SmtpService extends BaseHttpService {
-  sendEmail(email: string, name: string, message: string) {
-    const payload = {
-      email: email,
-      name: name,
-      message: message
-    }
-
-    return this.post(ServerConfigConstants.BACKEND_ADDRESS + '/send_email', payload);
+  sendEmail(email: string, name: string, message: string, recaptcha: string) {
+    var params = {email: email, name: name, message: message, recaptcha: recaptcha};
+    return this.post(ServerConfigConstants.BACKEND_ADDRESS + '/send_email', params);
   }
 }
 // move to services folder

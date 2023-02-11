@@ -1,0 +1,13 @@
+<div class="container">
+  <div *ngIf="this.blog !== null">
+    <div class="row my-5 text-center">
+      <h1 class="title">{{ blog.title }}</h1>
+    </div>
+    <div class="row my-5 text-center">
+      <div class="col-12">
+        <img class="uploaded-image img-fluid" *ngIf="imageFound" [src]="imgSource">
+      </div>
+    </div>
+    <div  [innerHTML]="this.sanitizer.bypassSecurityTrustHtml(this.blog.content)"></div>
+  </div>
+</div>

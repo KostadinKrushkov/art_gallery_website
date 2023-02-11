@@ -3,25 +3,23 @@ import { Route, RouterModule } from '@angular/router';
 import { CoreComponentsModule } from 'src/app/shared/core-components.module';
 import { UICategoryComponentsModule } from 'src/app/category/ui/category-form/ui-category-components.module';
 import { UIBlogComponentsModule } from 'src/app/blog/ui/ui-blog-components.module';
-import { BlogPageComponent } from './blog-page.component';
-import { InfiniteScrollModule } from 'ngx-infinite-scroll';
+import { FullBlogPageComponent } from './full-blog-page.component';
 
 const routes: Route[] = [
   {
-    path: '', component: BlogPageComponent
+    path: '', component: FullBlogPageComponent
   }
 ]
 
 @NgModule({
   declarations: [
-    BlogPageComponent
+    FullBlogPageComponent,
   ],
   imports: [
     CoreComponentsModule,
     RouterModule.forChild(routes),
     UICategoryComponentsModule,
-    UIBlogComponentsModule,
-    InfiniteScrollModule
+    UIBlogComponentsModule
   ]
 })
-export class BlogPageModule { }
+export class FullBlogPageModule { }

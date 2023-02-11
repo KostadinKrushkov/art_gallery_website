@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { FormActionsConstants } from 'src/app/shared/constants/constants';
 import { DataStorageService } from 'src/app/shared/data-access/data-storage.service';
 import { Category } from 'src/app/shared/models/entity.models';
@@ -19,8 +19,9 @@ export class CategoryFormComponent implements OnInit {
   public buttonMessage = "";
   public myForm: FormGroup;
   submitted = false;
+  is_loading = false;
 
-  constructor(private dataStorageService: DataStorageService, private route: ActivatedRoute, private popupNotificationService: PopupNotificationsService) {
+  constructor(private dataStorageService: DataStorageService, private route: ActivatedRoute, private router: Router, private popupNotificationService: PopupNotificationsService) {
     this.myForm = new FormGroup({
       name: new FormControl('', Validators.required),
       weight: new FormControl(''),
@@ -87,6 +88,7 @@ export class CategoryFormComponent implements OnInit {
     this.submitted = true;
 
     if (form.valid) {
+      this.is_loading = true;
       let category = {
         name: form.controls['name'].value,
         weight: this.parseWeight(form.controls['weight']),
@@ -106,8 +108,10 @@ export class CategoryFormComponent implements OnInit {
 
       responseSubscription.subscribe((response:BasicResponse<Category>) => {
         this.popupNotificationService.showResponse<Category>(response);
+        this.router.navigate(['/gallery']);
       }, (error: BasicResponse<Category>) => {
         this.popupNotificationService.showResponse(error);
+        this.is_loading = false;
       })
 
     } else {

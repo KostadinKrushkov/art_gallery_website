@@ -10,8 +10,11 @@
 
 .text-description {
   font-size: 1.25em;
-  /* text-align: left; */
-  /* align-items: center;
-  justify-content: center;
-  align-self: flex-start; */
+}
+
+.uploaded-image {
+  /* max-width: 60%;
+  max-height: 60%; */
+  text-align: center;
+  display: inline-block;
 }

@@ -37,12 +37,20 @@ export class DataStorageService extends BaseHttpService {
     return this.get<BasicResponse<Picture[]>>(ServerConfigConstants.BACKEND_ADDRESS + '/picture');
   }
 
+  getPicturesForHome() {
+    return this.get<BasicResponse<Picture[]>>(ServerConfigConstants.BACKEND_ADDRESS + '/home/pictures');
+  }
+
   savePicture(picture: Picture) {
     return this.post<BasicResponse<Picture>>(ServerConfigConstants.BACKEND_ADDRESS + '/picture', picture);
   }
 
+  updatePicture(picture: Picture) {
+    return this.put<BasicResponse<Picture>>(ServerConfigConstants.BACKEND_ADDRESS + '/picture', picture);
+  }
+
   deletePicture(pictureTitle: string) {
-    return this.delete<BasicResponse<Picture>>(ServerConfigConstants.BACKEND_ADDRESS + '/picture', {title: pictureTitle})
+    return this.delete<BasicResponse<Picture>>(ServerConfigConstants.BACKEND_ADDRESS + '/picture', {title: pictureTitle});
   }
 
   getBlogs() {
@@ -62,7 +70,9 @@ export class DataStorageService extends BaseHttpService {
 
   updateBlog(blog: Blog) {
     return this.put<BasicResponse<Blog>>(ServerConfigConstants.BACKEND_ADDRESS + '/blog', blog);
-
   }
 
+  deleteBlog(blogTitle: string) {
+    return this.delete<BasicResponse<Picture>>(ServerConfigConstants.BACKEND_ADDRESS + '/blog', {title: blogTitle});
+  }
 }

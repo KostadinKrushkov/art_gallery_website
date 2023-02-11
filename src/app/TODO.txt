@@ -8,5 +8,6 @@ TODOs:
 
 Polish up todos:
 - Disable the register button during waiting for the response
+- Fix the logout extra error message (both green and red box appear)
 
 DONE:

@@ -6,7 +6,8 @@
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "test": "ng test",
+    "serve": "ng serve --ssl --ssl-cert  D:\\Coding\\rumen_website_backend\\temp\\official_rumenplamenovart.com-2023-02-09.pem --ssl-key D:\\Coding\\rumen_website_backend\\temp\\rumenplamenovart.com-2023-02-09.key"
   },
   "private": true,
   "dependencies": {
@@ -19,6 +20,7 @@
     "@angular/platform-browser": "^14.0.0",
     "@angular/platform-browser-dynamic": "^14.0.0",
     "@angular/router": "^14.0.0",
+    "@auth0/angular-jwt": "^5.1.2",
     "@ng-bootstrap/ng-bootstrap": "^13.1.0",
     "@tinymce/tinymce-angular": "^7.0.0",
     "angular-notifier": "^12.0.0",

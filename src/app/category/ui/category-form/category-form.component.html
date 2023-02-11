@@ -34,7 +34,7 @@
 
   <div class="row button-row">
     <div class="col-4">
-      <button class="btn btn-primary" type="submit">{{ buttonMessage }}</button>
+      <button [disabled]="is_loading" class="btn btn-primary" type="submit">{{ buttonMessage }}</button>
     </div>
   </div>
 </form>

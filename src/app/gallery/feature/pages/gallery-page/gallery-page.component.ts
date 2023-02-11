@@ -4,10 +4,10 @@ import { Router } from '@angular/router';
 import { AuthenticationService } from 'src/app/auth/data-access/authentication.service';
 import { PictureDetailsPopupComponent } from 'src/app/gallery/ui/picture-details-popup/picture-details-popup.component';
 import { DataStorageService } from 'src/app/shared/data-access/data-storage.service';
-import { Picture, Category } from 'src/app/shared/models/entity.models';
+import { Picture } from 'src/app/shared/models/entity.models';
 import { PopupNotificationsService } from 'src/app/shared/services/popup-notifications.service';
 import { DateUtilities } from 'src/app/shared/utils/utility-functions';
-import { Observable, forkJoin } from 'rxjs';
+import { forkJoin } from 'rxjs';
 
 @Component({
   selector: 'app-gallery-page',
@@ -35,17 +35,17 @@ export class GalleryPageComponent implements OnInit {
   }
 
   isAdmin() {
-    return this.authenticationService.isLoggedIn && this.authenticationService.isAdmin
+    return this.authenticationService.isAdmin();
   }
 
-  getSelectedCategoryNames(buttonNames: string[]) {
+  setSelectedCategoryNamesAndRefreshData(buttonNames: string[]) {
     this.loadedPictures = [];
 
     this.selectedCategoryNames = buttonNames;
     this.refreshPictureData();
   }
 
-  getSelectedYears(buttonNames: string[]) {
+  setSelectedYearsAndRefreshData(buttonNames: string[]) {
     this.loadedPictures = [];
 
     this.selectedYears = buttonNames;
@@ -64,18 +64,15 @@ export class GalleryPageComponent implements OnInit {
   }
 
   onScroll() {
-    console.log("Yes")
     this.loadMoreItems();
   }
 
   loadMoreItems(): boolean {
-    console.log("Current length: " + this.loadedPictures.length);
     if (this.loadedPictures.length >= this.allFilteredPictures.length) {
       return false;
     }
     const remainingLength = Math.min(3, this.allFilteredPictures.length - this.loadedPictures.length);
     let morePictures = this.allFilteredPictures.slice(this.loadedPictures.length, this.loadedPictures.length + remainingLength);
-    console.log(this.loadedPictures);
     this.loadedPictures.push(...morePictures);
     return true;
   }
@@ -85,18 +82,21 @@ export class GalleryPageComponent implements OnInit {
     let categoriesSubscription = this.dataStorageService.getCategories();
 
     forkJoin([picturesSubscription, categoriesSubscription]).subscribe((responses) => {
-
       this.allFilteredPictures = responses[0].json;
-      for (let picture of this.allFilteredPictures) {
-        this.pictureYearsSet.add(DateUtilities.getYearFromDate(picture.created_at))
-      }
-      this.pictureYearsList = Array.from(this.pictureYearsSet);
-
       let categories = responses[1].json;
-      for (let category of categories) {
-        this.categoryNamesSet.add(category.name);
+
+      if (this.pictureYearsList.length === 0 && this.categoryNameList.length === 0) {
+        for (let picture of this.allFilteredPictures) {
+          this.pictureYearsSet.add(DateUtilities.getYearFromDate(picture.created_at));
+        }
+
+        for (let category of categories) {
+          this.categoryNamesSet.add(category.name);
+        }
+
+        this.pictureYearsList = Array.from(this.pictureYearsSet);
+        this.categoryNameList = Array.from(this.categoryNamesSet);
       }
-      this.categoryNameList = Array.from(this.categoryNamesSet);
 
       this.sortPictureYears()
       this.sortPictures();
@@ -155,7 +155,7 @@ export class GalleryPageComponent implements OnInit {
     }
 
     if (this.loadedPictures.length === 0) {
-      this.loadedPictures = this.allFilteredPictures.slice(0, 6);
+      this.loadedPictures = this.allFilteredPictures.slice(0, 9);
     }
   }
 

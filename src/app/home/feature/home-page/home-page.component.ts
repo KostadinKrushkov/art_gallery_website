@@ -7,19 +7,15 @@ import { Picture } from 'src/app/shared/models/entity.models';
   styleUrls: ['./home-page.component.css']
 })
 export class HomePageComponent implements OnInit {
-	// public images = [944, 1011, 984].map((n) => `https://picsum.photos/id/${n}/900/500`);
   public images: Picture[] = [];
-  // public images
 
   constructor(private dataStorageService: DataStorageService) { }
 
   ngOnInit(): void {
-    this.dataStorageService.getPictures().subscribe(result => {
+    this.dataStorageService.getPicturesForHome().subscribe(result => {
       for (let picture of result.json) {
         this.images.push(picture);
       }
     })
    }
-
-
 }

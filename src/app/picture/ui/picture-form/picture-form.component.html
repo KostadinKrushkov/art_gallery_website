@@ -43,7 +43,7 @@
 
         <div>
           <div class="flex-image-div">
-            <img class="uploaded-image" *ngIf="this.receivedImage !== null && imagePath == ''" [src]="this.receivedImage" alt="Image" />
+            <img class="uploaded-image" *ngIf="this.imgUrl !== null && imagePath == ''" [src]="this.imgUrl" alt="Image" />
             <div class="row my-5">
               <img class="uploaded-image" *ngIf="imagePath !== ''" [src]="imgUrl">
               <span class="text-danger" *ngIf="imageErrorMessage !== ''"> *{{ imageErrorMessage }}</span>
@@ -55,7 +55,7 @@
     </div>
 
     <div>
-      <button type="submit" class="btn btn-primary">{{ this.buttonMessage }}</button>
+      <button [disabled]="is_loading" type="submit" class="btn btn-primary">{{ this.buttonMessage }}</button>
     </div>
   </div>
 

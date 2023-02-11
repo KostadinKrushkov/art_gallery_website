@@ -26,7 +26,7 @@
         </div>
         <div class="col-6">
           <input [formControl]="myForm.controls.email" placeholder="john.doe@mail.com"/>
-          <span class="text-danger" *ngIf="submitted || (registerFormControl['email'].touched && registerFormControl['email'].errors)"> *Email is required</span>
+          <span class="text-danger" *ngIf="formControl.email.errors && (submitted || formControl['email'].touched)"> *Email is required</span>
         </div>
       </div>
 
@@ -35,8 +35,8 @@
           <label>Full name</label>
         </div>
         <div class="col-6">
-          <input [formControl]="myForm.controls.name" placeholder="John Doe"/>
-          <span class="text-danger" *ngIf="submitted || (registerFormControl['name'].touched && registerFormControl['name'].hasError('required'))"> *Your name is required</span>
+          <input [formControl]="myForm.controls.name" placeholder="John Doe" [size]=""/>
+          <span class="text-danger" *ngIf="formControl.name.errors && (formControl['name'].touched || submitted)"> *Your name is required</span>
         </div>
       </div>
 
@@ -46,11 +46,23 @@
         </div>
         <div class="col-6">
           <textarea [formControl]="myForm.controls.message" rows="15" cols="100"></textarea>
-          <span class="text-danger" *ngIf="submitted || (registerFormControl['message'].touched && registerFormControl['message'].hasError('required'))"> *Message box is required</span>
+          <span class="text-danger" *ngIf="(formControl.message.errors) && (formControl['message'].touched || submitted)"> *Message box is required</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="row ms-5">
+      <div class="col">
+        <ngx-recaptcha2
+        [siteKey]="siteKey"
+        formControlName="recaptcha">
+        </ngx-recaptcha2>
+        <div *ngIf="myForm.controls.recaptcha.errors && (myForm.controls.recaptcha.touched || submitted)" class="text-danger">
+          <div>*Please retry the reCAPTCHA</div>
         </div>
       </div>
     </div>
   </div>
 
-  <button type="submit" class="btn btn-dark center-btn my-3 ms-5" (click)="onSubmit()">Send message</button>
+  <button type="submit" class="btn btn-dark center-btn my-4 ms-5" (click)="onSubmit()">Send message</button>
 </form>

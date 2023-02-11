@@ -8,10 +8,10 @@ export interface AuthenticationResponse {
 }
 
 export interface BasicResponse<T> {
-  status_code: number
-  status: string
-  message: string
-  json: T
+  status_code: number,
+  status: string,
+  message: string,
+  json: T,
   is_error: string | null  // should I remove
 }
 

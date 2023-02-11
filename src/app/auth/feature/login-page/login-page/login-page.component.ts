@@ -11,51 +11,39 @@ import { PopupNotificationsService } from 'src/app/shared/services/popup-notific
   styleUrls: ['./login-page.component.css']
 })
 export class LoginPageComponent implements OnInit {
-  registerForm: FormGroup | any;
-  submitted = false;
-  failedToLogin = false;
+  public loginForm: FormGroup | any;
+  public submitted = false;
+  public failedToLogin = false;
+  public siteKey: string = '6Lfu-WYkAAAAAGzn54L1sUWnYN3Vbb2dkn99h-dF';
 
   constructor(private formBuilder: FormBuilder, private authService: AuthenticationService, private router: Router, private popupNotificationService: PopupNotificationsService) { }
 
   ngOnInit() {
-    this.registerForm = this.formBuilder.group({
+    this.loginForm = this.formBuilder.group({
         username: ['', Validators.required],
         password: ['', [Validators.required]],
-    });
+        recaptcha: ['', Validators.required]
+      });
   }
 
       // convenience getter for easy access to form fields
-  get formControls() { return this.registerForm.controls; }
+  get formControls() { return this.loginForm.controls; }
 
   onSubmit() {
     this.submitted = true;
-
-    if (this.registerForm.invalid) {
+    if (this.loginForm.invalid) {
         return;
     }
 
     const user = {
-      username: this.registerForm.value['username'],
-      password: this.registerForm.value['password'],
+      username: this.loginForm.value['username'],
+      password: this.loginForm.value['password'],
       email: null
     } as User;
 
-    this.authService.login(user).subscribe({
-      next: (response) => {
-        this.popupNotificationService.showResponse(response);
-
-        if (response.message === AuthenticationResponseConstants.SUCCESSFULLY_LOGGED_IN) {
-          this.authService.isLoggedIn = true;
-        } else if (response.message === AuthenticationResponseConstants.SUCCESSFULLY_LOGGED_IN_AS_ADMIN) {
-          this.authService.isLoggedIn = true;
-          this.authService.isAdmin = true;
-        }
-
+    const recaptcha = this.loginForm.value['recaptcha'];
+    if (!this.authService.login(user, recaptcha) || this.loginForm.invalid) {
         this.router.navigate(['/home']);
-      }, error: (error) => {
-        this.failedToLogin = true;
-        this.popupNotificationService.showResponse(error);
-      }, complete: () => {console.info('complete')}
-    })
+    }
   }
 }
