@@ -1,10 +1,17 @@
+import { environment } from "src/environments/environment";
+
 export class ServerConfigConstants {
-  public static readonly BACKEND_ADDRESS: string = 'https://localhost:5000';
+  public static BACKEND_ADDRESS: string = environment.BACKEND_ADDRESS;
+  public static readonly NUM_PICTURES_TO_EXTEND_LOAD = 9
+}
+
+export class KeyConstants {
+  public static siteKey: string = '6Lfu-WYkAAAAAGzn54L1sUWnYN3Vbb2dkn99h-dF';
 }
 
 export class FormActionsConstants {
-  public static readonly CREATE = "CREATE";
-  public static readonly UPDATE = "UPDATE";
+  public static readonly CREATE = "Create";
+  public static readonly UPDATE = "Update";
 }
 
 export class AuthenticationResponseConstants {
@@ -16,4 +23,5 @@ export class AuthenticationResponseConstants {
 export class AuthenticationRoleConstants {
   public static readonly USER_ROLE = 'USER_ROLE';
   public static readonly ADMIN_ROLE = 'ADMIN_ROLE';
+  public static readonly ALL_ROLES: string[] = [this.USER_ROLE, this.ADMIN_ROLE];
 }

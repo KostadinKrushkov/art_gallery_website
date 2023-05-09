@@ -1,28 +1,26 @@
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { DomSanitizer } from '@angular/platform-browser';
-import { DataStorageService } from 'src/app/shared/data-access/data-storage.service';
+import { ActivatedRoute } from '@angular/router';
+import { Component, ViewChild } from '@angular/core';
+
 import { AsyncSubject, Subject } from 'rxjs';
-import { Component, OnInit, Input, ViewChild } from '@angular/core';
+import { DataStorageService } from 'src/app/shared/data-access/data-storage.service';
 import { Blog } from 'src/app/shared/models/entity.models';
 import { FormActionsConstants } from 'src/app/shared/constants/constants';
-import { ActivatedRoute } from '@angular/router';
 import { PopupNotificationsService } from 'src/app/shared/services/popup-notifications.service';
+import { BaseFormComponent } from 'src/app/shared/ui/base-form/base-form.component';
 
 @Component({
   selector: 'app-blog-form',
   templateUrl: './blog-form.component.html',
   styleUrls: ['./blog-form.component.css']
 })
-export class BlogFormComponent implements OnInit {
+export class BlogFormComponent extends BaseFormComponent {
   private editorSubject: Subject<any> = new AsyncSubject();
   public imageErrorMessage = '';
   public imageFound = false;
   public imgSource: string | null | ArrayBuffer = null;
-  public submitted = false;
-  public buttonMessage = '';
-
-  @Input()
-  public mode = FormActionsConstants.CREATE;
+  override formType = 'blog';
 
   @ViewChild('editor') editor: any;
 
@@ -31,19 +29,17 @@ export class BlogFormComponent implements OnInit {
   htmlPresenterString: string = '';
   successfully_saved_blog: Blog | null = null;
 
-  public myForm = new FormGroup({
+  public override myForm = new FormGroup({
     title: new FormControl('', Validators.required),
     content: new FormControl('', Validators.required),
   });
 
-  constructor(private dataStorageService: DataStorageService, public sanitizer: DomSanitizer, private route: ActivatedRoute, private popupNotificationService: PopupNotificationsService) {}
+  constructor(private dataStorageService: DataStorageService, public sanitizer: DomSanitizer, private route: ActivatedRoute, private popupNotificationService: PopupNotificationsService) {
+    super();
+  }
 
-  ngOnInit(): void {
-    if (this.mode === FormActionsConstants.CREATE) {
-      this.buttonMessage = "Save blog";
-    } else if (this.mode === FormActionsConstants.UPDATE) {
-      this.buttonMessage = "Update blog";
-    }
+  override ngOnInit(): void {
+    super.ngOnInit();
 
     this.route.params.subscribe(routeParams => {
       if (routeParams['blog-title']) {
@@ -56,7 +52,7 @@ export class BlogFormComponent implements OnInit {
     this.dataStorageService.getBlog(blogTitle).subscribe(
       response => {
       if (response.json) {
-        const blog = response.json
+        const blog = response.json;
         this.myForm.setValue({
           title: blog.title,
           content: blog.content,
@@ -70,16 +66,12 @@ export class BlogFormComponent implements OnInit {
     });
   }
 
-  get registerFormControl() {
-    return this.myForm.controls;
-  }
-
   handleEditorInit(e: any) {
     this.editorSubject.next(e.editor);
     this.editorSubject.complete();
   }
 
-  onSaveContent() {
+  override onSubmit() {
     if (this.successfully_saved_blog) {
       this.mode = FormActionsConstants.UPDATE;
     }
@@ -96,7 +88,7 @@ export class BlogFormComponent implements OnInit {
       'content': this.content,
       'title': this.title,
       'image': this.imgSource
-    } as Blog
+    } as Blog;
 
     if (this.content.length === 0 || this.title.length == 0) {
       this.popupNotificationService.showWarningMessage("You need to fill both title and content boxes.");
@@ -114,6 +106,8 @@ export class BlogFormComponent implements OnInit {
       if (this.mode === FormActionsConstants.CREATE) {
           this.dataStorageService.saveBlog(blog).subscribe(response => {
             this.successfully_saved_blog = blog;
+            this.mode = FormActionsConstants.UPDATE;
+            this.refreshButtonMessage();
             this.popupNotificationService.showResponse(response);
           }, (error) => {
             this.popupNotificationService.showResponse(error);
@@ -143,7 +137,6 @@ export class BlogFormComponent implements OnInit {
         return;
     }
 
-
     if (files[0].name) {
       this.imageFound = true;
     }
@@ -166,5 +159,3 @@ export class BlogFormComponent implements OnInit {
     this.imageFound = false;
   }
 }
-
-// TODO check if you can extract the form classes into a generic form base class with onsubmit ...

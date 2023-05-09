@@ -6,6 +6,7 @@ import { AuthenticationService } from 'src/app/auth/data-access/authentication.s
 import { DataStorageService } from 'src/app/shared/data-access/data-storage.service';
 import { Blog } from 'src/app/shared/models/entity.models';
 import { PopupNotificationsService } from 'src/app/shared/services/popup-notifications.service';
+import { BrowserUtilities } from 'src/app/shared/utils/utility-functions';
 
 
 @Component({
@@ -36,13 +37,10 @@ export class BlogRowCardComponent implements OnInit {
     }
   }
 
-  convertToPlain(html: any) {  // Todo should create utils and move it there as a function
+  convertToPlain(html: any) {
     var tempDivElement = document.createElement("div");
-
-    // Set the HTML content with the given value
     tempDivElement.innerHTML = html;
 
-    // Retrieve the text property of the element
     return tempDivElement.textContent || tempDivElement.innerText || "";
   }
 
@@ -73,7 +71,7 @@ export class BlogRowCardComponent implements OnInit {
     }
   }
 
-  reloadCurrentPage() { // todo should I make a util for this
-    window.location.reload();
+  reloadCurrentPage() {
+    BrowserUtilities.reloadCurrentPage();
   }
 }

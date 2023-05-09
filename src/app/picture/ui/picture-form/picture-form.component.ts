@@ -1,35 +1,31 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { DomSanitizer } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
+
 import { FormActionsConstants } from 'src/app/shared/constants/constants';
 import { DataStorageService } from 'src/app/shared/data-access/data-storage.service';
 import { Picture } from 'src/app/shared/models/entity.models';
 import { PopupNotificationsService } from 'src/app/shared/services/popup-notifications.service';
+import { BaseFormComponent } from 'src/app/shared/ui/base-form/base-form.component';
 
 @Component({
   selector: 'app-picture-form',
   templateUrl: './picture-form.component.html',
   styleUrls: ['./picture-form.component.css']
 })
-export class PictureFormComponent implements OnInit {
-  public myForm: FormGroup;
+export class PictureFormComponent extends BaseFormComponent {
   public selectedFile: File;
   public imageErrorMessage = "";
   public imagePath = "";
   public imgUrl: any;
   public receivedImage: any;
-  public buttonMessage = "";
-
-  @Input()
-  public mode: string = FormActionsConstants.CREATE
   public categoriesNames: string[] = [];
-
-  submitted = false;
-  is_loading = false;
+  override formType = 'picture';
 
   constructor(private route: ActivatedRoute, private router: Router, private _sanitizer: DomSanitizer,
     private dataStorageService: DataStorageService, private popupNotificationService: PopupNotificationsService) {
+    super();
     this.myForm = new FormGroup({
       title: new FormControl('', Validators.required),
       description: new FormControl('',  Validators.required),
@@ -39,14 +35,10 @@ export class PictureFormComponent implements OnInit {
     this.selectedFile = <File>{"name": ""};
   }
 
-  ngOnInit(): void {
-    this.setCategoryNames();
-    if (this.mode === FormActionsConstants.CREATE) {
-      this.buttonMessage = "Create picture";
-    } else if (this.mode === FormActionsConstants.UPDATE) {
-      this.buttonMessage = "Update picutre";
-    }
+  override ngOnInit(): void {
+    super.ngOnInit();
 
+    this.setCategoryNames();
     this.route.params.subscribe(routeParams => {
       if (routeParams['picture-title']) {
         this.setPictureFormData(routeParams['picture-title']);
@@ -95,11 +87,7 @@ export class PictureFormComponent implements OnInit {
     });
   }
 
-  get registerFormControl() {
-    return this.myForm.controls;
-  }
-
-  onSubmit(form: FormGroup) {
+  override onSubmit(form: FormGroup) {
     this.submitted = true;
 
     if (form.valid) {

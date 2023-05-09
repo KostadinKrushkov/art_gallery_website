@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
+import { NgxSpinnerService } from 'ngx-spinner';
 import { AuthenticationService } from 'src/app/auth/data-access/authentication.service';
 import { DataStorageService } from 'src/app/shared/data-access/data-storage.service';
 import { Blog } from 'src/app/shared/models/entity.models';
@@ -13,18 +14,18 @@ export class BlogPageComponent implements OnInit {
   public savedBlogs: Blog[] = [];
   public loadedBlogs: Blog[] = [];
 
-  constructor(private dataStorageService: DataStorageService, public sanitizer: DomSanitizer, private authenticationService: AuthenticationService) {
-
-  }
+  constructor(private dataStorageService: DataStorageService, public sanitizer: DomSanitizer, private authenticationService: AuthenticationService, private spinner: NgxSpinnerService) {}
 
   ngOnInit(): void {
+    this.spinner.show();
     this.retrieveBlogs();
   }
 
   retrieveBlogs() {
     this.dataStorageService.getBlogs().subscribe(response => {
       this.savedBlogs = response.json;
-        this.loadedBlogs = this.savedBlogs.slice(0, 5);
+      this.loadedBlogs = this.savedBlogs.slice(0, 5);
+      this.spinner.hide();
     })
   }
 

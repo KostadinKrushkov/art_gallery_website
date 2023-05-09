@@ -8,6 +8,6 @@
         <img class="uploaded-image img-fluid" *ngIf="imageFound" [src]="imgSource">
       </div>
     </div>
-    <div  [innerHTML]="this.sanitizer.bypassSecurityTrustHtml(this.blog.content)"></div>
+    <div [innerHTML]="this.sanitizer.bypassSecurityTrustHtml(this.blog.content)"></div>
   </div>
 </div>

@@ -1,14 +1,17 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+
 import { HeaderComponent } from './ui/header/header.component';
 import { CoreComponentsModule } from './core-components.module';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ParseTimestamp } from 'src/app/shared/utils/pipes';
+import { BaseFormComponent } from './ui/base-form/base-form.component';
 
 
 @NgModule({
   declarations: [
     HeaderComponent,
+    BaseFormComponent,
     ParseTimestamp,
   ],
   imports: [
@@ -17,6 +20,7 @@ import { ParseTimestamp } from 'src/app/shared/utils/pipes';
     NgbModule,
   ], exports: [
     HeaderComponent,
+    BaseFormComponent,
     ParseTimestamp,
   ]
 })

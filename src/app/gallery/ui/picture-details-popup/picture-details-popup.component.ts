@@ -8,6 +8,7 @@ import { Picture } from 'src/app/shared/models/entity.models';
   styleUrls: ['./picture-details-popup.component.css']
 })
 export class PictureDetailsPopupComponent implements OnInit {
+  public showDetailsFlag: boolean = false;
 
   constructor(
     public dialogRef: MatDialogRef<PictureDetailsPopupComponent>,
@@ -20,4 +21,11 @@ export class PictureDetailsPopupComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  showDetails() {
+    this.showDetailsFlag = true;
+  }
+
+  hideDetails() {
+    this.showDetailsFlag = false;
+  }
 }

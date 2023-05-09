@@ -3,6 +3,7 @@ import { CoreComponentsModule } from 'src/app/shared/core-components.module';
 import { ContactPageComponent } from '../contact-page/contact-page.component';
 import { ContactPageRoutingModule } from './contact-routing.module';
 import { NgxCaptchaModule } from 'ngx-captcha';
+import { NgxSpinnerModule } from 'ngx-spinner';
 
 @NgModule({
   declarations: [
@@ -12,6 +13,7 @@ import { NgxCaptchaModule } from 'ngx-captcha';
     ContactPageRoutingModule,
     CoreComponentsModule,
     NgxCaptchaModule,
+    NgxSpinnerModule,
   ],
   providers: [],
   bootstrap: []

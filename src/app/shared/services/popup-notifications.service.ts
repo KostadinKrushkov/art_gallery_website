@@ -34,7 +34,6 @@ export class PopupNotificationsService {
       } else {
         message = response.message;
       }
-      
       this.showErrorMessage(message);
     } else if ([200, 201].includes(response.status_code)) {
       this.showSuccessfulMessage(response.message);

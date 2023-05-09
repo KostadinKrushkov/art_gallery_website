@@ -1,4 +1,13 @@
-<div *ngIf="true" class="container">
+<ngx-spinner
+  bdColor="rgba(0, 0, 0, 0.4)"
+  size="medium"
+  color="#fff"
+  type="ball-scale-ripple-multiple"
+  [fullScreen]="true"
+  ><p style="color: white" >Loading...</p>
+</ngx-spinner>
+
+<div *ngIf="true" class="pictures-block">
   <div *ngIf="isAdmin()">
     <div class="row my-5">
       <div class="col-lg-4 col-md-4 col-sm-12">
@@ -24,6 +33,7 @@
     infiniteScroll
     [infiniteScrollDistance]="2"
     [infiniteScrollThrottle]="50"
+    [infiniteScrollDisabled]="is_loading"
     (scrolled)="onScroll()"
     >
 

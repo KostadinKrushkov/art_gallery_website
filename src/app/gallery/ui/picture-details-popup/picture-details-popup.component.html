@@ -1,13 +1,33 @@
-
+<!--
 <div class="flex-container">
   <div class="flex-wrapper">
     <img src="{{ data.image }}" class="popup-img">
     <div class="popup-details">
       <h1>'{{ data.title }}'</h1>
-      <p>{{ data.category }}</p>
+      <i>{{ data.category }}</i>
       <p>{{ data.description }}</p>
       <p>{{ data.created_at | parse_timestamp }}</p>
     </div>
   </div>
 </div>
+-->
+<div ngbDropdown
+  class="information"
+  (mouseenter)="showDetails()"
+  (mouseleave)="hideDetails()">
 
+  <mat-icon class="icon-information" >info_outline</mat-icon>
+  <div
+  class="details my-5"
+  [ngClass]="{'backgroundSemiTransparent': showDetailsFlag, 'backgroundTransparent': !showDetailsFlag}"
+  *ngIf="showDetailsFlag">
+    <h1>'{{ data.title }}'</h1>
+    <i>{{ data.category }}</i>
+    <p>{{ data.description }}</p>
+    <p>{{ data.created_at | parse_timestamp }}</p>
+  </div>
+</div>
+
+<div class="flex-container">
+  <img src="{{ data.image }}" class="popup-img">
+</div>

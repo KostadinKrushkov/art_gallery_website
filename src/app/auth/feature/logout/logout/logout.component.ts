@@ -1,7 +1,6 @@
+import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 import { AuthenticationService } from 'src/app/auth/data-access/authentication.service';
-import { PopupNotificationsService } from 'src/app/shared/services/popup-notifications.service';
 
 @Component({
   templateUrl: './logout.component.html',
@@ -9,10 +8,13 @@ import { PopupNotificationsService } from 'src/app/shared/services/popup-notific
 })
 export class LogoutComponent implements OnInit {
 
-  constructor(private authService: AuthenticationService, private router: Router, private popupNotificationService: PopupNotificationsService) { }
+  constructor(private authService: AuthenticationService, private location: Location) { }
 
   ngOnInit(): void {
-    this.authService.logout();
+    if (confirm("Are you sure you want to log out?")) {
+      this.authService.logout();
+    } else {
+      this.location.back();
+    }
   }
-
 }

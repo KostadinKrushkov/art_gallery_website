@@ -1,9 +1,9 @@
-// import { BasicResponse } from '../../../shared/models/authentication.models';
-import { BasicResponse } from 'src/app/shared/models/authentication.models';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { PopupNotificationsService } from 'src/app/shared/services/popup-notifications.service';
 import { SmtpService } from 'src/app/shared/services/smtp.service';
+import { KeyConstants } from 'src/app/shared/constants/constants';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-contact-page',
@@ -15,7 +15,7 @@ export class ContactPageComponent implements OnInit {
   public personalEmail = 'rumenplamenovart@gmail.com';
   public instagramURL = 'https://www.instagram.com/rumenplamenovart/'
   public submitted = false;
-  public siteKey: string = '6Lfu-WYkAAAAAGzn54L1sUWnYN3Vbb2dkn99h-dF';
+  public siteKey = KeyConstants.siteKey;
 
   public myForm = new FormGroup({
     email: new FormControl('', [Validators.required,  Validators.email]),
@@ -24,7 +24,7 @@ export class ContactPageComponent implements OnInit {
     recaptcha: new FormControl('', Validators.required),
   });
 
-  constructor(private popupNotificationsService: PopupNotificationsService, private smtpService: SmtpService) { }
+  constructor(private popupNotificationsService: PopupNotificationsService, private smtpService: SmtpService, private spinner: NgxSpinnerService) { }
 
   ngOnInit(): void {
   }
@@ -34,6 +34,7 @@ export class ContactPageComponent implements OnInit {
   }
 
   onSubmit() {
+    this.spinner.show();
     this.submitted = true;
 
     const email = this.myForm.controls['email'].value;
@@ -47,9 +48,10 @@ export class ContactPageComponent implements OnInit {
           this.popupNotificationsService.showSuccessfulMessage(response.message);
           this.myForm.reset();
           this.submitted = false;
+          this.spinner.hide();
         }, error: (error) => {
           this.popupNotificationsService.showErrorMessage(error.message); // test when the ssl is added to see the correct error message
-        }, complete: () => {}
+        }, complete: () => {this.spinner.hide();}
       })
     }
   }

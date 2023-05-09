@@ -6,8 +6,9 @@ import { PictureDetailsPopupComponent } from 'src/app/gallery/ui/picture-details
 import { DataStorageService } from 'src/app/shared/data-access/data-storage.service';
 import { Picture } from 'src/app/shared/models/entity.models';
 import { PopupNotificationsService } from 'src/app/shared/services/popup-notifications.service';
-import { DateUtilities } from 'src/app/shared/utils/utility-functions';
 import { forkJoin } from 'rxjs';
+import { NgxSpinnerService } from 'ngx-spinner';
+import { ServerConfigConstants } from 'src/app/shared/constants/constants';
 
 @Component({
   selector: 'app-gallery-page',
@@ -15,22 +16,23 @@ import { forkJoin } from 'rxjs';
   styleUrls: ['./gallery-page.component.css']
 })
 export class GalleryPageComponent implements OnInit {
+  private cursorPictureTitle: string = '';
   public loadedPictures: Picture[] = [];
   public allFilteredPictures: Picture[] = [];
-  private categoryNamesSet: Set<string> = new Set(['All']);
-  private pictureYearsSet: Set<string> = new Set(['All']);
-  public categoryNameList: string[] = [];
-  public pictureYearsList: string[] = [];
+
+  public categoryNameList: string[] = ['All'];
+  public pictureYearsList: string[] = ['All'];
 
   public selectedCategoryNames: string[] = [];
   public selectedYears: string[] = [];
   public selector: string = ".main-panel";
-
+  public is_loading: boolean = false;
 
   constructor(private authenticationService: AuthenticationService, private dataStorageService: DataStorageService, public dialog: MatDialog, private router: Router,
-    private popupNotificationService: PopupNotificationsService) { }
+    private popupNotificationService: PopupNotificationsService, private spinner: NgxSpinnerService) { }
 
   ngOnInit(): void {
+    this.spinner.show();
     this.refreshPictureData();
   }
 
@@ -39,15 +41,12 @@ export class GalleryPageComponent implements OnInit {
   }
 
   setSelectedCategoryNamesAndRefreshData(buttonNames: string[]) {
-    this.loadedPictures = [];
-
     this.selectedCategoryNames = buttonNames;
+    // TODO possible improvement to reduce amount of querying before showing the gallery items
     this.refreshPictureData();
   }
 
   setSelectedYearsAndRefreshData(buttonNames: string[]) {
-    this.loadedPictures = [];
-
     this.selectedYears = buttonNames;
     this.refreshPictureData();
   }
@@ -57,8 +56,7 @@ export class GalleryPageComponent implements OnInit {
       height: '95%',
       width: '95%',
       data: picture
-    });``
-
+    });
 
     dialogRef.afterClosed().subscribe(() => {});
   }
@@ -67,39 +65,53 @@ export class GalleryPageComponent implements OnInit {
     this.loadMoreItems();
   }
 
-  loadMoreItems(): boolean {
-    if (this.loadedPictures.length >= this.allFilteredPictures.length) {
-      return false;
-    }
-    const remainingLength = Math.min(3, this.allFilteredPictures.length - this.loadedPictures.length);
-    let morePictures = this.allFilteredPictures.slice(this.loadedPictures.length, this.loadedPictures.length + remainingLength);
-    this.loadedPictures.push(...morePictures);
-    return true;
+  loadMoreItems(): void {
+    this.is_loading = true;
+    this.dataStorageService.getPictures(this.selectedCategoryNames, this.selectedYears, ServerConfigConstants.NUM_PICTURES_TO_EXTEND_LOAD, this.cursorPictureTitle).subscribe((response) => {
+      let picturesToLoad = response.json;
+      if (picturesToLoad.length !== 0) {
+        this.loadedPictures = [...this.loadedPictures, ...picturesToLoad]
+        this.cursorPictureTitle = picturesToLoad[picturesToLoad.length - 1].title;
+      }
+
+    }, (error) => {
+      this.popupNotificationService.showErrorMessage(error);
+    }, () => {
+      this.is_loading = false;
+    });
   }
 
   refreshPictureData() {
-    let picturesSubscription = this.dataStorageService.getPictures();
-    let categoriesSubscription = this.dataStorageService.getCategories();
+    this.loadedPictures = [];
+    this.is_loading = true;
 
-    forkJoin([picturesSubscription, categoriesSubscription]).subscribe((responses) => {
-      this.allFilteredPictures = responses[0].json;
-      let categories = responses[1].json;
+    let pictureYearsSubscription = this.dataStorageService.getDistinctPictureYears();
+    let picturesSubscription = this.dataStorageService.getPictures(this.selectedCategoryNames, this.selectedYears);
+    let categoriesSubscription = this.dataStorageService.getCategories(true);
 
-      if (this.pictureYearsList.length === 0 && this.categoryNameList.length === 0) {
-        for (let picture of this.allFilteredPictures) {
-          this.pictureYearsSet.add(DateUtilities.getYearFromDate(picture.created_at));
-        }
-
-        for (let category of categories) {
-          this.categoryNamesSet.add(category.name);
-        }
-
-        this.pictureYearsList = Array.from(this.pictureYearsSet);
-        this.categoryNameList = Array.from(this.categoryNamesSet);
+    forkJoin([pictureYearsSubscription, picturesSubscription, categoriesSubscription]).subscribe((responses) => {
+      if (this.pictureYearsList.length === 1) {
+        this.pictureYearsList = [...this.pictureYearsList, ...responses[0].json];
       }
 
-      this.sortPictureYears()
-      this.sortPictures();
+      this.loadedPictures = [...responses[1].json];
+      if (this.loadedPictures.length !== 0) {
+        this.cursorPictureTitle = responses[1].json[responses[1].json.length - 1].title;
+      }
+
+      let categories = responses[2].json;
+      if (this.categoryNameList.length === 1) {
+        for (let category of categories) {
+          this.categoryNameList.push(category.name)
+        }
+      }
+
+      this.spinner.hide();
+    }, (error) => {
+      this.popupNotificationService.showResponse(error);
+      this.spinner.hide();
+    }, () => {
+      this.is_loading = false;
     })
   }
 
@@ -118,44 +130,6 @@ export class GalleryPageComponent implements OnInit {
       return dataList.filter((value) => {
         return selectables.includes(value);
       })
-    }
-  }
-
-  sortPictureYears() {
-    this.pictureYearsList = this.pictureYearsList.sort((objA, objB) => Number(objA) - Number(objB));
-  }
-
-  sortPictures() {
-    let filteredYears: string[] = this.getFilteredYears();
-    let filteredCategories: string[] = this.getFilteredCategories();
-
-    let yearsToPicturesListMap: any = {};
-    for (let picture of this.allFilteredPictures.slice()) {
-      const yearOfCreation = DateUtilities.getYearFromDate(picture.created_at);
-
-      let yearList = yearsToPicturesListMap[yearOfCreation]
-
-      if (filteredYears.includes(yearOfCreation)) {
-        if (!(yearList instanceof Array)) {
-          yearList = [];
-          yearsToPicturesListMap[yearOfCreation] = yearList;
-        }
-
-        if (filteredCategories.includes(picture.category)) {
-          yearList.push(picture);
-        }
-      }
-    }
-
-    this.allFilteredPictures = [];
-    let key: keyof typeof yearsToPicturesListMap;
-    for (key in yearsToPicturesListMap) {
-      const v = yearsToPicturesListMap[key];
-      this.allFilteredPictures = [...this.allFilteredPictures, ...v];  // todo add sorting for the categories ?
-    }
-
-    if (this.loadedPictures.length === 0) {
-      this.loadedPictures = this.allFilteredPictures.slice(0, 9);
     }
   }
 

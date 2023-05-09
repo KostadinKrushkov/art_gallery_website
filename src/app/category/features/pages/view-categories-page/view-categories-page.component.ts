@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { DataStorageService } from 'src/app/shared/data-access/data-storage.service';
 import { Category } from 'src/app/shared/models/entity.models';
+import { PopupNotificationsService } from 'src/app/shared/services/popup-notifications.service';
 
 @Component({
   selector: 'app-view-categories-page',
@@ -9,17 +10,17 @@ import { Category } from 'src/app/shared/models/entity.models';
   styleUrls: ['./view-categories-page.component.css']
 })
 export class ViewCategoriesPageComponent implements OnInit {
-  public categories: Category[] = []
+  public categories: Category[] = [];
 
-  constructor(private dataStorageService: DataStorageService, private router: Router) { }
+  constructor(private dataStorageService: DataStorageService, private router: Router, private notificationService: PopupNotificationsService) { }
 
   ngOnInit(): void {
-    this.refreshCategories()
+    this.refreshCategories();
   }
 
   refreshCategories() {
     this.dataStorageService.getCategories().subscribe(response => {
-      this.categories = response.json
+      this.categories = response.json;
     })
   }
 
@@ -30,9 +31,8 @@ export class ViewCategoriesPageComponent implements OnInit {
   deleteCategory(categoryName: string) {
     if (confirm("Are you sure you want to delete category: " + categoryName)) {
       this.dataStorageService.deleteCategory(categoryName).subscribe(response => {
-        console.log(response) // TODO add notifaction system
-        this.refreshCategories()
-
+        this.notificationService.showSuccessfulMessage(response.message);
+        this.refreshCategories();
       })
     }
   }

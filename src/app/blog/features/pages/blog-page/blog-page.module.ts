@@ -5,6 +5,7 @@ import { UICategoryComponentsModule } from 'src/app/category/ui/category-form/ui
 import { UIBlogComponentsModule } from 'src/app/blog/ui/ui-blog-components.module';
 import { BlogPageComponent } from './blog-page.component';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
+import { NgxSpinnerModule } from 'ngx-spinner';
 
 const routes: Route[] = [
   {
@@ -21,7 +22,8 @@ const routes: Route[] = [
     RouterModule.forChild(routes),
     UICategoryComponentsModule,
     UIBlogComponentsModule,
-    InfiniteScrollModule
+    InfiniteScrollModule,
+    NgxSpinnerModule,
   ]
 })
 export class BlogPageModule { }

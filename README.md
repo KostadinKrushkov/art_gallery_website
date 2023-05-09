@@ -1,21 +1,28 @@
-Installed so far:
+# Rumen Plamenov art gallery REST API
+_Visit rumenplamenovart.com to see final result_
 
-npm install -D @angular/cli 
-npm install bootstrap@v5.2.0 
-npm install tinymce@^5
-npm install -D @angular/core
-npm install @angular/material@14.2.4
-npm install -g http-server
-npm install angular-notifier@12.0.0
-npm install @angular/localize@14.2.0
-npm install ngx-captcha
-npm install --save @auth0/angular-jwt
+This repo is the UI for the art gallery website
+To view the REST API code and database, you can visit https://github.com/KostadinKrushkov/art_gallery_backend
 
-npm install --save-dev @types/node
-npm install -D @types/node
+Version 1.0
 
-npm install -D @types/node@16.11.20
-npm install 
+Technologies used for this project
+- Frontend Development: Angular (Typescript), HTML, CSS
+- Backend Development: Python3 + Flask + SQLAlchemy
+- SQL server + SQL Management Studio
+- Docker + docker-compose
+- Testing: mostly integration tests with pytest, and some unit testing
 
+---
 
-To view the backend you can visit https://github.com/KostadinKrushkov/art_gallery_backend
+# Deployment
+_to build the image with version and attach it to docker hub so it can be downloaded_
+docker build -f .\Dockerfile.frontend -t rocazzar/rumen-plamenov-angular-app:v1.0 .
+_to tag the image_
+docker tag rocazzar/rumen-plamenov-angular-app:v1.0 rocazzar/rumen-plamenov-angular-app:v1.0-release
+_to push the tagged image to docker hub_
+docker push rocazzar/rumen-plamenov-angular-app:v1.0-release
+
+_to run the UI in a container locally_
+docker run -d -it -p 127.0.0.1:443:443/tcp --name rumen-plamenov-angular-app rocazzar/rumen-plamenov-angular-app:latest
+

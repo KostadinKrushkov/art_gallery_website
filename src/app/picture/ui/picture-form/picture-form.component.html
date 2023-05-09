@@ -19,7 +19,7 @@
               <label>Description </label>
             </div>
             <div class="col-12">
-              <input formControlName="description" placeholder="Your description">
+              <textarea formControlName="description" rows="10" cols="50" placeholder="Your description"></textarea>
               <span class="text-danger" *ngIf="(registerFormControl['description'].value.length === 0 && (registerFormControl['description'].touched || submitted))"> *Description is required</span>
             </div>
           </div>

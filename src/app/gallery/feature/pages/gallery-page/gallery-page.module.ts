@@ -6,6 +6,7 @@ import { SharedComponentsModule } from 'src/app/shared/shared-components.module'
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { UIGalleryComponentsModule } from 'src/app/gallery/ui/ui-gallery-components.module';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
+import { NgxSpinnerModule } from 'ngx-spinner';
 
 const routes: Route[] = [
   {
@@ -23,7 +24,8 @@ const routes: Route[] = [
     SharedComponentsModule,
     NgbModule,
     UIGalleryComponentsModule,
-    InfiniteScrollModule
+    InfiniteScrollModule,
+    NgxSpinnerModule,
   ]
 })
 export class GalleryPageModule { }

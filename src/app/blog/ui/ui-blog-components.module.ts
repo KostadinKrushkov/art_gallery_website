@@ -2,9 +2,8 @@ import { NgModule } from '@angular/core';
 import { CoreComponentsModule } from 'src/app/shared/core-components.module';
 import { BlogFormComponent } from './blog-form/blog-form.component';
 import { EditorModule } from '@tinymce/tinymce-angular';
-import { BlogRowCardComponent } from './blog-row-card/blog-row-card.component'; // TODO figure out if you can add the provider and BrowserModule here instead of in app.module.ts
+import { BlogRowCardComponent } from './blog-row-card/blog-row-card.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { ParseTimestamp } from 'src/app/shared/utils/pipes';
 import { SharedComponentsModule } from 'src/app/shared/shared-components.module';
 
 @NgModule({

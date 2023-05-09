@@ -18,7 +18,7 @@ export class EnableCookieHeadersInterceptor implements HttpInterceptor {
       headers = headers.set('Access-Control-Allow-Origin', ServerConfigConstants.BACKEND_ADDRESS);
       headers = headers.set("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
 
-      request = request.clone({headers});
+      request = request.clone({withCredentials: true, ...headers});
       return next.handle(request);
   }
 }

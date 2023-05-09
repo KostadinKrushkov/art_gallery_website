@@ -1,13 +1,19 @@
-TODOs:
-- Make sure that the lazy loading is working correctly for all modules
-- Add notification system on receiving response for put post and delete requests as well as general error handling
-- Hold information regarding the logged in user so you can logout -> get it from the session somehow
-- Add are you sure popup for logout before sending the request
-- Protect the website from CSRF ( look into how )
-- Figure out on edit why the toggle buttons aren't updated when data is passed
-
-Polish up todos:
-- Disable the register button during waiting for the response
-- Fix the logout extra error message (both green and red box appear)
+Possible TODO:
+- Fix UI speed and css for mobile devices
+- Improve the speed in the gallery page
+- Add a loading spinner on the bottom of the gallery page when loading in more data
 
 DONE:
+- Add notification system on receiving response for put post and delete requests as well as general error handling
+- Hold information regarding the logged in user so you can logout -> Stores information regarding type of user is logged in in brower storage, faking it wouldn't cause a problem since backend has additional checks
+- Added loading spinner on auth, gallery, contact and blog pages when a client makes a request
+- Fix the logout extra error message (both green and red box appear)
+- Make the recaptchas work after a successfull request (they stay ticked on and can't retick it)
+- Add are you sure popup for logout before sending the request
+- Make sure that the lazy loading is working correctly for all modules
+- Make and endpoint for the home screen items, so the admin can select them
+- Figure out on edit why the toggle buttons aren't updated when data is passed
+- Protect the website from CSRF -> turns out it's not neccesary. Tried implementing it but it seems that flask has some problem with CSRF + JWT tokens together
+- Make clear documentation regarding how to run the application locally for development and how to release to prod in as few steps as possible
+- Make the loading of the extra items in the blog and gallery to query data instead of just showing it
+- Improve the querying in the gallery-page

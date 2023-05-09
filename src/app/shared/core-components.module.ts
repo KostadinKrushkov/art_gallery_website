@@ -5,7 +5,6 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon'
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 
 const material = [
@@ -13,8 +12,6 @@ const material = [
   MatIconModule,
   MatButtonToggleModule,
   MatDialogModule,
-  // MatDialogRef,
-  // MAT_DIALOG_DATA
 ]
 
 @NgModule({
@@ -24,14 +21,12 @@ const material = [
     CommonModule,
     ReactiveFormsModule,
     FormsModule,
-    HttpClientModule,
     RouterModule,
     material,
   ], exports: [
     CommonModule,
     ReactiveFormsModule,
     FormsModule,
-    HttpClientModule,
     RouterModule,
     material,
   ]

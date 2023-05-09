@@ -1,41 +1,51 @@
+:host {
+  position: relative;
+}
+
 .flex-container {
   display: flex;
-  flex-direction: column;
   justify-content: center;
+  align-items: center;
   height: 100%;
   width: 100%;
-  overflow-y: auto;
+}
+
+.backgroundSemiTransparent {
+  background: white;
+  opacity: 0.85;
+}
+
+.backgroundTransparent {
+  background: transparent;
+}
+
+.information {
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 1;
+  cursor: pointer;
+}
+
+.icon-information {
+  position: absolute;
+  top: 0;
+  right: 0;
+  background: transparent;
+  color: #5e5c5a;
+  transform: scale(1.5);
+}
+
+.details {
+  color: black;
+  padding: 20px;
+  border-radius: 20px;
+  margin-right: 20px;
+  max-width: 500px;
 }
 
 .popup-img {
   object-fit: contain;
-}
-
-.popup-details {
-  display: flex;
-  flex-direction: column;
-  padding-left: 5%;
-  justify-content: start;
-  min-width: 0;
-}
-
-.flex-wrapper {
-  display: flex;
-  /* flex-flow: row wrap; */
-  flex-direction: column;
-  padding-top: 5%;
-  padding-bottom: 5%;
-  width: 100%;
-  overflow-y: auto;
-}
-
-/* Migrate to scss whenever possible (bootstrap constants) */
-@media (min-width: 768px) {
-  .flex-wrapper {
-    flex-direction: row;
-  }
-
-  .popup-img {
-    max-width: 60%;
-  }
+  max-width: 97%;
+  max-height: 97%;
 }

@@ -23,7 +23,7 @@
     </div>
 
   </mat-sidenav>
-  <mat-sidenav-content>
-    <mat-icon class="clickable icon-display" (click)="opened=!opened" *ngIf="!opened">reorder</mat-icon>
+  <mat-sidenav-content *ngIf="!opened">
+    <mat-icon class="clickable icon-display" (click)="opened=!opened" >reorder</mat-icon>
   </mat-sidenav-content>
 </mat-sidenav-container>

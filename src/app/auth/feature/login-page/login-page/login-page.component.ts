@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { NgxSpinnerService } from 'ngx-spinner';
 import { AuthenticationService } from 'src/app/auth/data-access/authentication.service';
-import { AuthenticationResponseConstants } from 'src/app/shared/constants/constants';
+import { KeyConstants } from 'src/app/shared/constants/constants';
 import { User } from 'src/app/shared/models/authentication.models';
-import { PopupNotificationsService } from 'src/app/shared/services/popup-notifications.service';
 
 @Component({
   templateUrl: './login-page.component.html',
@@ -14,9 +14,9 @@ export class LoginPageComponent implements OnInit {
   public loginForm: FormGroup | any;
   public submitted = false;
   public failedToLogin = false;
-  public siteKey: string = '6Lfu-WYkAAAAAGzn54L1sUWnYN3Vbb2dkn99h-dF';
+  public siteKey = KeyConstants.siteKey;
 
-  constructor(private formBuilder: FormBuilder, private authService: AuthenticationService, private router: Router, private popupNotificationService: PopupNotificationsService) { }
+  constructor(private formBuilder: FormBuilder, private authService: AuthenticationService, private router: Router) { }
 
   ngOnInit() {
     this.loginForm = this.formBuilder.group({

@@ -16,20 +16,26 @@ export class SelectableButtonsBarComponent implements OnInit {
   @Input()
   public btnType: string = '';
   public activeButtonIndexes: number[] = [];
+  private initialLoading = true;
 
-  constructor() { }
+  constructor() {}
 
-  ngOnInit() {
+  ngOnInit() {}
 
-  }
+  ngOnChanges(changes: any): void {
 
-  ngOnChanges(): void {
     let indexOfAllBtn = this.buttonNames.indexOf('All');
     if (indexOfAllBtn >= 0 && this.activeButtonIndexes.length == 0) {
       this.activeButtonIndexes.push(indexOfAllBtn);
     }
 
-    this.sendSelectedButtonsEvent();
+    if (changes.buttonNames && changes.buttonNames.previousValue === undefined) {
+      this.initialLoading = false;
+    }
+
+    if (!this.initialLoading) {
+      this.sendSelectedButtonsEvent();
+    }
   }
 
   isButtonSelected(buttonName: string) {
@@ -38,7 +44,12 @@ export class SelectableButtonsBarComponent implements OnInit {
   }
 
   sendSelectedButtonsEvent() {
-    this.selectedButtonNamesEvent.emit(this.getSelectedButtons());
+    const buttonNames = this.getSelectedButtons();
+    const index = buttonNames.indexOf('All');
+    if (index !== -1) {
+      buttonNames.splice(index, 1);
+    }
+    this.selectedButtonNamesEvent.emit(buttonNames);
   }
 
   getSelectedButtons() {
@@ -57,11 +68,13 @@ export class SelectableButtonsBarComponent implements OnInit {
       const index = this.activeButtonIndexes.indexOf(clickedButtonIndex);
       this.activeButtonIndexes.splice(index, 1);
     } else {
-      // Enable button and remove all if set
+      // Enable button
       this.activeButtonIndexes.push(clickedButtonIndex);
       let indexOfAllBtn = this.activeButtonIndexes.indexOf(allButtonIndex);
       if (buttonName !== 'All' && this.activeButtonIndexes.includes(indexOfAllBtn)) {
         this.activeButtonIndexes.splice(indexOfAllBtn, 1);
+      } else if (buttonName === 'All') {
+        this.activeButtonIndexes = [allButtonIndex];
       }
     }
 

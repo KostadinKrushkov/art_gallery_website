@@ -3,17 +3,20 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { Router } from '@angular/router';
 import { AuthenticationService } from 'src/app/auth/data-access/authentication.service';
 import { MustMatch } from 'src/app/auth/utils/validators';
+import { KeyConstants } from 'src/app/shared/constants/constants';
 import { User } from 'src/app/shared/models/authentication.models';
 import { PopupNotificationsService } from 'src/app/shared/services/popup-notifications.service';
 
 
 function passwordValidator(control: FormControl) {
   let password = control.value;
-  var number = /\d/;
+  let hasNumberRegex = /\d/;
+  let hasSpecialCharRegex = /\W/;
 
-  const hasNumber = number.test(password);
+  const hasNumber = hasNumberRegex.test(password);
+  const hasSpecialChar = hasSpecialCharRegex.test(password);
 
-  if (password.length > RegisterPageComponent.minPasswordLength && hasNumber) {
+  if (password.length > RegisterPageComponent.minPasswordLength && hasNumber && hasSpecialChar) {
     return null
   }
 
@@ -28,7 +31,7 @@ export class RegisterPageComponent implements OnInit {
   public static minPasswordLength = 10;
   public registerForm: FormGroup | any;
   public submitted = false;
-  public siteKey: string = '6Lfu-WYkAAAAAGzn54L1sUWnYN3Vbb2dkn99h-dF';
+  public siteKey = KeyConstants.siteKey;
 
   constructor(private formBuilder: FormBuilder, private authService: AuthenticationService, private router: Router, private popupNotificationService: PopupNotificationsService) { }
 
@@ -47,12 +50,11 @@ export class RegisterPageComponent implements OnInit {
 
   isPasswordValid() {
     let password = this.registerForm.value['password'];
-    var hasNumber = /\d/;
-    // TODO find out how to add the special character check as well
-    return password.length > RegisterPageComponent.minPasswordLength && hasNumber.test(password);
+    let hasNumber = /\d/;
+    let hasSpecialChar = /\W/;
+    return password.length > RegisterPageComponent.minPasswordLength && hasNumber.test(password) && hasSpecialChar.test(password);
   }
 
-  // convenience getter for easy access to form fields
   get form() { return this.registerForm.controls; }
 
   onSubmit() {

@@ -1,10 +1,11 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormActionsConstants } from 'src/app/shared/constants/constants';
 import { DataStorageService } from 'src/app/shared/data-access/data-storage.service';
 import { Category } from 'src/app/shared/models/entity.models';
 import { PopupNotificationsService } from 'src/app/shared/services/popup-notifications.service';
+import { BaseFormComponent } from 'src/app/shared/ui/base-form/base-form.component';
 import { BasicResponse } from '../../../shared/models/authentication.models';
 
 
@@ -13,25 +14,18 @@ import { BasicResponse } from '../../../shared/models/authentication.models';
   templateUrl: './category-form.component.html',
   styleUrls: ['./category-form.component.css']
 })
-export class CategoryFormComponent implements OnInit {
-  @Input()
-  public mode = FormActionsConstants.CREATE;
-  public buttonMessage = "";
-  public myForm: FormGroup;
-  submitted = false;
-  is_loading = false;
+export class CategoryFormComponent extends BaseFormComponent {
+  override formType = 'category';
 
   constructor(private dataStorageService: DataStorageService, private route: ActivatedRoute, private router: Router, private popupNotificationService: PopupNotificationsService) {
+    super();
+
     this.myForm = new FormGroup({
       name: new FormControl('', Validators.required),
       weight: new FormControl(''),
       enabled: new FormControl('enabled'),
       is_subcategory: new FormControl('category')
     });
-  }
-
-  get registerFormControl() {
-    return this.myForm.controls;
   }
 
   parseWeight(weight: any) {
@@ -44,12 +38,8 @@ export class CategoryFormComponent implements OnInit {
     return null;
   }
 
-  ngOnInit(): void {
-    if (this.mode === FormActionsConstants.CREATE) {
-      this.buttonMessage = "Create category";
-    } else if (this.mode === FormActionsConstants.UPDATE) {
-      this.buttonMessage = "Update category";
-    }
+  override ngOnInit(): void {
+    super.ngOnInit();
 
     this.route.params.subscribe(routeParams => {
       if (routeParams['category-name']) {
@@ -84,7 +74,7 @@ export class CategoryFormComponent implements OnInit {
     });
   }
 
-  onSubmit(form: FormGroup) {
+  override onSubmit(form: FormGroup) {
     this.submitted = true;
 
     if (form.valid) {

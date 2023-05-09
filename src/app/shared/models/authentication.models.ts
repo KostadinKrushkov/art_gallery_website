@@ -12,7 +12,6 @@ export interface BasicResponse<T> {
   status: string,
   message: string,
   json: T,
-  is_error: string | null  // should I remove
 }
 
 export interface User {

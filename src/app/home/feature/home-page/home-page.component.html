@@ -1,6 +1,14 @@
+<ngx-spinner
+  bdColor="rgba(0, 0, 0, 0.4)"
+  size="medium"
+  color="#fff"
+  type="ball-scale-ripple-multiple"
+  [fullScreen]="true"
+  ><p style="color: white" >Loading...</p>
+</ngx-spinner>
 
-<ngb-carousel *ngIf="images" [interval]="500000000">
-	<ng-template ngbSlide *ngFor="let picture of images">
+<ngb-carousel *ngIf="selectedOptions.length" [interval]="500000000">
+	<ng-template ngbSlide *ngFor="let picture of selectedOptions">
 		<div class="picsum-img-wrapper">
       <img src="{{ picture.image }}" alt="Random first slide">
 		</div>
@@ -10,3 +18,12 @@
 		</div>
 	</ng-template>
 </ngb-carousel>
+
+<div class="row">
+  <app-favourites-multi-select-dropdown class="my-5"
+    [options]="options"
+    [selectedOptions]="selectedOptions"
+    (updateFavouritesEmitter)="updateFavourites($event)"
+    *ngIf="isAdmin()">
+  </app-favourites-multi-select-dropdown>
+</div>
