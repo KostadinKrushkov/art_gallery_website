@@ -1,7 +1,8 @@
 Possible TODO:
-- Fix UI speed and css for mobile devices
-- Improve the speed in the gallery page
-- Add a loading spinner on the bottom of the gallery page when loading in more data
+- Fix UI speed and css for mobile devices (e.g. the favourite images are far too big and are difficult to see anyway, fit them to the screen)
+- Compress the large images so it works better for mobile
+- Check if there is a better component than the ngb carousel to show the home images since it appear to work quite slow -> Maybe just show one image with two arrows and a slide animation
+
 
 DONE:
 - Add notification system on receiving response for put post and delete requests as well as general error handling
@@ -10,10 +11,18 @@ DONE:
 - Fix the logout extra error message (both green and red box appear)
 - Make the recaptchas work after a successfull request (they stay ticked on and can't retick it)
 - Add are you sure popup for logout before sending the request
-- Make sure that the lazy loading is working correctly for all modules
 - Make and endpoint for the home screen items, so the admin can select them
 - Figure out on edit why the toggle buttons aren't updated when data is passed
 - Protect the website from CSRF -> turns out it's not neccesary. Tried implementing it but it seems that flask has some problem with CSRF + JWT tokens together
 - Make clear documentation regarding how to run the application locally for development and how to release to prod in as few steps as possible
 - Make the loading of the extra items in the blog and gallery to query data instead of just showing it
 - Improve the querying in the gallery-page
+- Add UI favicon
+- Add a loading spinner on the bottom of the gallery page when loading in more data
+- Add GZIP compression for all text
+- Make sure that the lazy loading is working correctly for all modules. It's not working properly and causing performance problems
+- Check if there is a way to not import the same modules all over the place
+- Improve the speed in the gallery and home pages
+-Can you store images in a better way than base64 to improve compression (find the most optimal strategy for future projects)
+A: Yes, for larger images above 256kb it's best to store them in NTFS (on hdd) but for smaller ones it's best to keep them as blobs or varbinary in the database. But base64 is definitely not opitmal
+

@@ -66,6 +66,8 @@ export class GalleryPageComponent implements OnInit {
   }
 
   loadMoreItems(): void {
+    this.spinner.show();
+
     this.is_loading = true;
     this.dataStorageService.getPictures(this.selectedCategoryNames, this.selectedYears, ServerConfigConstants.NUM_PICTURES_TO_EXTEND_LOAD, this.cursorPictureTitle).subscribe((response) => {
       let picturesToLoad = response.json;
@@ -78,6 +80,7 @@ export class GalleryPageComponent implements OnInit {
       this.popupNotificationService.showErrorMessage(error);
     }, () => {
       this.is_loading = false;
+      this.spinner.hide();
     });
   }
 

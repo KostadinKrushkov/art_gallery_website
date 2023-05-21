@@ -10,8 +10,8 @@ export class SelectableButtonsBarComponent implements OnInit {
   @Output()
   public selectedButtonNamesEvent = new EventEmitter<string[]>();
 
-  @Input()
-  public buttonNames: string[] = []
+  @Input() public buttonNames: string[] = []
+  @Input() public instanceId: number | null = null;
 
   @Input()
   public btnType: string = '';
@@ -23,18 +23,24 @@ export class SelectableButtonsBarComponent implements OnInit {
   ngOnInit() {}
 
   ngOnChanges(changes: any): void {
+    // Since the component is reused it shares the same instance, this paramter is used so that the component changes the value for only itself instead of both instances
+    if (changes.instanceId) {
+      let indexOfAllBtn = this.buttonNames.indexOf('All');
+      if (indexOfAllBtn >= 0 && this.activeButtonIndexes.length == 0) {
+        this.activeButtonIndexes.push(indexOfAllBtn);
+      }
 
-    let indexOfAllBtn = this.buttonNames.indexOf('All');
-    if (indexOfAllBtn >= 0 && this.activeButtonIndexes.length == 0) {
-      this.activeButtonIndexes.push(indexOfAllBtn);
+      this.changeInitialLoadingFlagOrEmitEvent(changes);
+    }
+  }
+
+  changeInitialLoadingFlagOrEmitEvent(changes: any) {
+    if (!this.initialLoading) {
+      this.sendSelectedButtonsEvent();
     }
 
     if (changes.buttonNames && changes.buttonNames.previousValue === undefined) {
       this.initialLoading = false;
-    }
-
-    if (!this.initialLoading) {
-      this.sendSelectedButtonsEvent();
     }
   }
 

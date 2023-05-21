@@ -1,12 +1,3 @@
-<ngx-spinner
-  bdColor="rgba(0, 0, 0, 0.4)"
-  size="medium"
-  color="#fff"
-  type="ball-scale-ripple-multiple"
-  [fullScreen]="true"
-  ><p style="color: white" >Loading...</p>
-</ngx-spinner>
-
 <div *ngIf="true" class="pictures-block">
   <div *ngIf="isAdmin()">
     <div class="row my-5">
@@ -23,10 +14,10 @@
   </div>
 
   <div class="row my-3">
-    <app-selectable-buttons-bar [btnType]="'category'" [buttonNames]="categoryNameList" (selectedButtonNamesEvent)="setSelectedCategoryNamesAndRefreshData($event)"></app-selectable-buttons-bar>
+    <app-selectable-buttons-bar [btnType]="'category'" [buttonNames]="categoryNameList" [instanceId]="1" (selectedButtonNamesEvent)="setSelectedCategoryNamesAndRefreshData($event)"></app-selectable-buttons-bar>
   </div>
   <div class="row my-3">
-    <app-selectable-buttons-bar [btnType]="'year'" [buttonNames]="pictureYearsList" (selectedButtonNamesEvent)="setSelectedYearsAndRefreshData($event)"></app-selectable-buttons-bar>
+    <app-selectable-buttons-bar [btnType]="'year'" [buttonNames]="pictureYearsList" [instanceId]="2" (selectedButtonNamesEvent)="setSelectedYearsAndRefreshData($event)"></app-selectable-buttons-bar>
   </div>
 
   <div
@@ -56,4 +47,15 @@
       </div>
     </div>
   </div>
+</div>
+
+<div class="row my-5 loading-spinner">
+  <ngx-spinner
+    bdColor="rgba(0, 0, 0, 0.0)"
+    size="medium"
+    color="#fff"
+    type="ball-scale-ripple-multiple"
+    [fullScreen]="false"
+    ><p style="color: white" >Loading...</p>
+  </ngx-spinner>
 </div>

@@ -10,7 +10,7 @@ export interface Category {
   name: string,
   enabled: boolean | number,
   is_subcategory: boolean | number,
-  weight: null | number ,
+  weight: number | null,
 }
 
 

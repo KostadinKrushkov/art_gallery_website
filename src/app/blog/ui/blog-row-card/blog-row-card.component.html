@@ -6,8 +6,8 @@
           <div *ngIf="isAdmin()" ngbDropdown class="options-dots" (click)="open($event)" >
             <mat-icon id="dropdownBasic1" ngbDropdownToggle>more_vert</mat-icon>
             <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
-              <button type="button" (click)="editBlog(blog)" ngbDropdownItem>Edit picture</button>
-              <button type="button" (click)="deleteBlog(blog)" ngbDropdownItem>Delete picture</button>
+              <button type="button" (click)="editBlog(blog)" ngbDropdownItem>Edit blog</button>
+              <button type="button" (click)="deleteBlog(blog)" ngbDropdownItem>Delete blog</button>
           </div>
         </div>
         <img *ngIf="contains_image" src="{{ blog.image }}" class="img-fluid">
