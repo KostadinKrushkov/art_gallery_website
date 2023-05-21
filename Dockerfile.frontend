@@ -1,0 +1,22 @@
+# # Stage 1
+FROM node:alpine AS build
+
+WORKDIR /app
+COPY package.json package.json
+RUN npm cache clean --force
+RUN npm install --silent
+COPY . .
+RUN npm run build-prod
+
+FROM nginx:1.23-alpine
+LABEL author="Kostadin Krushkov"
+
+# NGINX config
+COPY --from=build /app/dist/rumen-plamenov-website/ /usr/share/nginx/html
+COPY ./nginx.conf  /etc/nginx/conf.d/default.conf
+
+EXPOSE 80 443
+CMD [ "nginx", "-g", "daemon off;" ]
+
+# run image with
+# docker run -d -it -p 127.0.0.1:443:443/tcp --name rumen-plamenov-angular-app rocazzar/rumen-plamenov-angular-app:latest

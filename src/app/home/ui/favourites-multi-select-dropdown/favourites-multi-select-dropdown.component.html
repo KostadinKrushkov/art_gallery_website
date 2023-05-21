@@ -1,0 +1,21 @@
+<div class="row">
+  <div class="col-xs-12 col-m-9 my-3">
+    <ng-multiselect-dropdown
+      [placeholder]="'Select favourite pictures'"
+      [settings]="dropdownSettings"
+      [data]="options"
+      [(ngModel)]="selectedOptions"
+      [disabled]="options.length === 0"
+    >
+    </ng-multiselect-dropdown>
+  </div>
+
+  <div class="col-4 my-3">
+    <button
+      class="btn btn-primary center"
+      [disabled]="options.length === 0"
+      (click)="updateFavourites()"
+      >Update favourites</button>
+  </div>
+</div>
+
