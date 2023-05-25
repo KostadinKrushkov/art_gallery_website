@@ -1,7 +1,8 @@
 export interface Blog {
   title: string,
   content: string,
-  image: string | null,
+  image_format: string,
+  image: string,
   created_at: string,
 }
 
@@ -18,6 +19,7 @@ export interface Picture {
   title: string,
   description: string,
   category: string,
+  image_format: string,
   image: string,
   created_at: string,
 }

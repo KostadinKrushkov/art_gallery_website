@@ -4,6 +4,7 @@ import { Route, RouterModule } from '@angular/router';
 import { RegisterPageComponent } from './register-page/register-page.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgxCaptchaModule } from 'ngx-captcha';
+import { NgxSpinnerModule } from 'ngx-spinner';
 
 const routes: Route[] = [
   {
@@ -20,7 +21,8 @@ const routes: Route[] = [
     RouterModule.forChild(routes),
     ReactiveFormsModule,
     FormsModule,
-    NgxCaptchaModule
+    NgxCaptchaModule,
+    NgxSpinnerModule
   ]
 })
 export class RegisterPageModule { }

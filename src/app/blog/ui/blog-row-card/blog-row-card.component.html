@@ -10,7 +10,7 @@
               <button type="button" (click)="deleteBlog(blog)" ngbDropdownItem>Delete blog</button>
           </div>
         </div>
-        <img *ngIf="contains_image" src="{{ blog.image }}" class="img-fluid">
+        <img *ngIf="contains_image" src="{{blog.image_format}},{{blog.image}}" class="img-fluid">
         <img *ngIf="!contains_image" src="/assets/images/no_image.jpg" alt="Image"/>
       </div>
     </div>

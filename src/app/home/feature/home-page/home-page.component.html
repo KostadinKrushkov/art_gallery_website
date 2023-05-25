@@ -7,10 +7,12 @@
   ><p style="color: white" >Loading...</p>
 </ngx-spinner>
 
-<ngb-carousel *ngIf="selectedOptions.length" [interval]="500000000">
-	<ng-template ngbSlide *ngFor="let picture of selectedOptions">
+<mat-icon *ngIf="selectedOptions.length" class="fullscreen-icon clickable" (click)="showPictureDetails(selectedOptions[+actionOptionId])">fullscreen</mat-icon>
+
+<ngb-carousel *ngIf="selectedOptions.length" [interval]="500000000" [activeId]="actionOptionId"  (slide)="onSlide($event)">
+	<ng-template ngbSlide *ngFor="let picture of selectedOptions; let i = index" [id]="'' + i">
 		<div class="picsum-img-wrapper">
-      <img src="{{ picture.image }}" alt="Random first slide">
+      <img src="{{picture.image_format}},{{picture.image}}" alt="ERROR, could not load images. Please review the galery">
 		</div>
 		<div class="carousel-caption">
 			<h3>{{ picture.title }}</h3>

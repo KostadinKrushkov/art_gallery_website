@@ -78,7 +78,7 @@ export class PictureFormComponent extends BaseFormComponent {
           category: picture.category,
         });
 
-        this.imgUrl = picture.image;
+        this.imgUrl = `${picture.image_format},${picture.image}`;
       } else {
         this.popupNotificationService.showErrorMessage("Could not find a picutre with title " + pictureTitle)
       }
@@ -116,7 +116,6 @@ export class PictureFormComponent extends BaseFormComponent {
         this.is_loading = false;
       });
     }
-
   }
 
   onFileSelect(event: any) {

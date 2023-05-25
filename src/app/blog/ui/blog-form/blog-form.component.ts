@@ -58,7 +58,7 @@ export class BlogFormComponent extends BaseFormComponent {
           content: blog.content,
         });
 
-        this.imgSource = blog.image;
+        this.imgSource = `${blog.image_format},${blog.image}`;
         this.imageFound = true;
       } else {
         this.popupNotificationService.showErrorMessage("Could not find a blog with title " + blogTitle);

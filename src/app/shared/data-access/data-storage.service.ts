@@ -62,8 +62,8 @@ export class DataStorageService extends BaseHttpService {
     return this.get<BasicResponse<string[]>>(ServerConfigConstants.BACKEND_ADDRESS + '/picture/years');
   }
 
-  getPicturesForHome() {
-    return this.get<BasicResponse<Picture[]>>(ServerConfigConstants.BACKEND_ADDRESS + '/home/pictures');
+  getPicturesForHome(compressionOn?: boolean) {
+    return this.get<BasicResponse<Picture[]>>(ServerConfigConstants.BACKEND_ADDRESS + '/home/pictures', {compression_on: compressionOn});
   }
 
   savePicture(picture: Picture) {
@@ -82,8 +82,18 @@ export class DataStorageService extends BaseHttpService {
     return this.delete<BasicResponse<Picture>>(ServerConfigConstants.BACKEND_ADDRESS + '/picture', {title: pictureTitle});
   }
 
-  getBlogs() {
-    return this.get<BasicResponse<Blog[]>>(ServerConfigConstants.BACKEND_ADDRESS + '/blog');
+  getBlogs(limit?: number, cursorBlogTitle?: string) {
+    let params = new HttpParams();
+
+    if (limit) {
+      params = params.set('limit', limit);
+    }
+
+    if (cursorBlogTitle) {
+      params = params.set('cursor_blog_title', cursorBlogTitle);
+    }
+
+    return this.get<BasicResponse<Blog[]>>(ServerConfigConstants.BACKEND_ADDRESS + '/blog', params);
   }
 
   getBlog(blogTitle: string) {

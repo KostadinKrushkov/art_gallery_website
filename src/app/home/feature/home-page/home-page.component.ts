@@ -5,6 +5,10 @@ import { DataStorageService } from 'src/app/shared/data-access/data-storage.serv
 import { Picture } from 'src/app/shared/models/entity.models';
 import { PopupNotificationsService } from 'src/app/shared/services/popup-notifications.service';
 import { NgxSpinnerService } from "ngx-spinner";
+import { NgbSlideEvent } from '@ng-bootstrap/ng-bootstrap';
+import { PictureDetailsPopupComponent } from 'src/app/gallery/ui/picture-details-popup/picture-details-popup.component';
+import { MatDialog } from '@angular/material/dialog';
+import { DeviceDetectionService } from 'src/app/shared/services/device-detection.service';
 
 @Component({
   templateUrl: './home-page.component.html',
@@ -13,31 +17,45 @@ import { NgxSpinnerService } from "ngx-spinner";
 export class HomePageComponent implements OnInit {
   public options: Picture[] = [];
   public selectedOptions: Picture[] = [];
+  public actionOptionId: string = '0';
 
-  constructor(private dataStorageService: DataStorageService, private popupNotificationService: PopupNotificationsService, private authenticationService: AuthenticationService, private loadingSpinner: NgxSpinnerService) { }
+  constructor(private dataStorageService: DataStorageService, private popupNotificationService: PopupNotificationsService, private authenticationService: AuthenticationService,
+    private loadingSpinner: NgxSpinnerService, public dialog: MatDialog, private deviceDetectionService: DeviceDetectionService) { }
 
   ngOnInit(): void {
     this.reloadData();
    }
 
+  showPictureDetails(picture: Picture) {
+    let dialogRef = this.dialog.open(PictureDetailsPopupComponent, {
+      height: '95%',
+      width: '95%',
+      data: picture
+    });
+
+    dialogRef.afterClosed().subscribe(() => {});
+  }
+
+  onSlide(slideEvent: NgbSlideEvent) {
+    this.actionOptionId = slideEvent.current;
+  }
+
   reloadData() {
-    console.log('Starting reload');
     this.loadingSpinner.show();
 
     // Loading the favourite pictures to be shown
-    this.dataStorageService.getPicturesForHome().subscribe(response => {
-      console.log('Started setting pictures')
+    const isMobile = this.deviceDetectionService.isMobile();
+    this.dataStorageService.getPicturesForHome(isMobile).subscribe(response => {
       this.selectedOptions = [];
 
         for (let picture of response.json) {
           this.selectedOptions.push(picture);
         }
-        console.log('Finished setting pictures')
     }, (error) => {
       this.popupNotificationService.showResponse(error);
+      this.loadingSpinner.hide();
     }, () => {
       this.loadingSpinner.hide();
-      console.log('Ending reload');
     })
 
     // When admin mode, show all of the pictures titles to choose favourites.

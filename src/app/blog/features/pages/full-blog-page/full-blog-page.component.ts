@@ -30,7 +30,7 @@ export class FullBlogPageComponent implements OnInit {
     this.dataStorageService.getBlog(blogTitle).subscribe(response => {
       if (response.json) {
         this.blog = response.json;
-        this.imgSource = this.blog.image;
+        this.imgSource = `${this.blog.image_format},${this.blog.image}`;
         this.imageFound = true;
       } else {
         this.popupNotificationService.showErrorMessage("Could not find a blog with title " + blogTitle);

@@ -1,7 +1,7 @@
 Possible TODO:
 - Fix UI speed and css for mobile devices (e.g. the favourite images are far too big and are difficult to see anyway, fit them to the screen)
-- Compress the large images so it works better for mobile
-- Check if there is a better component than the ngb carousel to show the home images since it appear to work quite slow -> Maybe just show one image with two arrows and a slide animation
+- Add sliding effect for the header on mobile
+- Improve mobile layout on all pages
 
 
 DONE:
@@ -25,4 +25,6 @@ DONE:
 - Improve the speed in the gallery and home pages
 -Can you store images in a better way than base64 to improve compression (find the most optimal strategy for future projects)
 A: Yes, for larger images above 256kb it's best to store them in NTFS (on hdd) but for smaller ones it's best to keep them as blobs or varbinary in the database. But base64 is definitely not opitmal
-
+- Check if there is a better component than the ngb carousel to show the home images since it appear to work quite slow -> Maybe just show one image with two arrows and a slide animation
+A: The component was fine, the processing power needed was too high for mobile so compressing the images helped
+- Compress the large images so it works better for mobile -> add flag

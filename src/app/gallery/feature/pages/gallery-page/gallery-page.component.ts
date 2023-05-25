@@ -42,7 +42,6 @@ export class GalleryPageComponent implements OnInit {
 
   setSelectedCategoryNamesAndRefreshData(buttonNames: string[]) {
     this.selectedCategoryNames = buttonNames;
-    // TODO possible improvement to reduce amount of querying before showing the gallery items
     this.refreshPictureData();
   }
 

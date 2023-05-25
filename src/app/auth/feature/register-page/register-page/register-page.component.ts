@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { NgxSpinnerService } from 'ngx-spinner';
 import { AuthenticationService } from 'src/app/auth/data-access/authentication.service';
 import { MustMatch } from 'src/app/auth/utils/validators';
 import { KeyConstants } from 'src/app/shared/constants/constants';
@@ -33,7 +34,7 @@ export class RegisterPageComponent implements OnInit {
   public submitted = false;
   public siteKey = KeyConstants.siteKey;
 
-  constructor(private formBuilder: FormBuilder, private authService: AuthenticationService, private router: Router, private popupNotificationService: PopupNotificationsService) { }
+  constructor(private formBuilder: FormBuilder, private authService: AuthenticationService, private loadingSpinner: NgxSpinnerService) { }
 
   ngOnInit() {
     this.registerForm = this.formBuilder.group({

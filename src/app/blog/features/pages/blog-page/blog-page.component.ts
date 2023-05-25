@@ -2,8 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { AuthenticationService } from 'src/app/auth/data-access/authentication.service';
+import { ServerConfigConstants } from 'src/app/shared/constants/constants';
 import { DataStorageService } from 'src/app/shared/data-access/data-storage.service';
 import { Blog } from 'src/app/shared/models/entity.models';
+import { PopupNotificationsService } from 'src/app/shared/services/popup-notifications.service';
 
 @Component({
   selector: 'app-blog-page',
@@ -11,10 +13,12 @@ import { Blog } from 'src/app/shared/models/entity.models';
   styleUrls: ['./blog-page.component.css']
 })
 export class BlogPageComponent implements OnInit {
+  public cursorBlogTitle: string = ''
+  public is_loading: boolean = false;
   public savedBlogs: Blog[] = [];
   public loadedBlogs: Blog[] = [];
 
-  constructor(private dataStorageService: DataStorageService, public sanitizer: DomSanitizer, private authenticationService: AuthenticationService, private spinner: NgxSpinnerService) {}
+  constructor(private dataStorageService: DataStorageService, public sanitizer: DomSanitizer, private authenticationService: AuthenticationService, private spinner: NgxSpinnerService, public popupNotificationService: PopupNotificationsService) {}
 
   ngOnInit(): void {
     this.spinner.show();
@@ -22,11 +26,20 @@ export class BlogPageComponent implements OnInit {
   }
 
   retrieveBlogs() {
-    this.dataStorageService.getBlogs().subscribe(response => {
-      this.savedBlogs = response.json;
-      this.loadedBlogs = this.savedBlogs.slice(0, 5);
+    this.is_loading = true;
+    this.dataStorageService.getBlogs(ServerConfigConstants.NUM_PICTURES_TO_EXTEND_LOAD, this.cursorBlogTitle).subscribe((response) => {
+      let blogsToLoad = response.json;
+      if (blogsToLoad.length !== 0) {
+        this.loadedBlogs = [...this.loadedBlogs, ...blogsToLoad];
+        this.cursorBlogTitle = blogsToLoad[blogsToLoad.length - 1].title;
+      }
+
       this.spinner.hide();
-    })
+      this.is_loading = false
+    }, (_) => {
+      this.spinner.hide();
+      this.is_loading = false
+    });
   }
 
   isAdmin() {
@@ -34,16 +47,20 @@ export class BlogPageComponent implements OnInit {
   }
 
   onScroll() {
-    this.loadMoreItems();
-  }
+    this.spinner.show();
+    this.is_loading = true;
 
-  loadMoreItems(): boolean {
-    if (this.loadedBlogs.length >= this.savedBlogs.length) {
-      return false;
-    }
-    const remainingLength = Math.min(3, this.savedBlogs.length - this.loadedBlogs.length);
-    let morePictures = this.savedBlogs.slice(this.loadedBlogs.length, this.loadedBlogs.length + remainingLength);
-    this.loadedBlogs.push(...morePictures);
-    return true;
+    this.dataStorageService.getBlogs(ServerConfigConstants.NUM_PICTURES_TO_EXTEND_LOAD, this.cursorBlogTitle).subscribe((response) => {
+      let blogsToLoad = response.json;
+      if (blogsToLoad.length !== 0) {
+        this.loadedBlogs = [...this.loadedBlogs, ...blogsToLoad]
+        this.cursorBlogTitle = blogsToLoad[blogsToLoad.length - 1].title;
+      }
+    }, (error) => {
+      this.popupNotificationService.showErrorMessage(error);
+    }, () => {
+      this.is_loading = false;
+      this.spinner.hide();
+    });
   }
 }
