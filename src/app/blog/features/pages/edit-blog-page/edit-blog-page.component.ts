@@ -4,7 +4,7 @@ import { FormActionsConstants } from 'src/app/shared/constants/constants';
 @Component({
   selector: 'app-edit-blog-page',
   templateUrl: './edit-blog-page.component.html',
-  styleUrls: ['./edit-blog-page.component.css']
+  styleUrls: ['./edit-blog-page.component.scss']
 })
 export class EditBlogPageComponent implements OnInit {
 

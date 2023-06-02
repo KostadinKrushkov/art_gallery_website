@@ -9,7 +9,7 @@ import { PopupNotificationsService } from 'src/app/shared/services/popup-notific
 @Component({
   selector: 'app-full-blog-page',
   templateUrl: './full-blog-page.component.html',
-  styleUrls: ['./full-blog-page.component.css']
+  styleUrls: ['./full-blog-page.component.scss']
 })
 export class FullBlogPageComponent implements OnInit {
   public blog: Blog | null = null;

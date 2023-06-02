@@ -1,7 +1,7 @@
 
 <div *ngIf="blog">
   <div class="row my-4 darken-layer" (click)="onClick(blog.title)">
-    <div class="col-2 me-5">
+    <div class="col-12 col-sm-12 col-md-6 col-lg-4 col-xl-3">
       <div class="blog-item">
           <div *ngIf="isAdmin()" ngbDropdown class="options-dots" (click)="open($event)" >
             <mat-icon id="dropdownBasic1" ngbDropdownToggle>more_vert</mat-icon>
@@ -14,7 +14,7 @@
         <img *ngIf="!contains_image" src="/assets/images/no_image.jpg" alt="Image"/>
       </div>
     </div>
-    <div class="col-9">
+    <div class="col-6 col-md-6 col-lg-8 col-xl-9 my-3">
       <h2 class="title">{{ blog.title }}</h2>
       <p>{{ plain_text_content }}</p>
       <span>{{ blog.created_at | parse_timestamp }}</span>

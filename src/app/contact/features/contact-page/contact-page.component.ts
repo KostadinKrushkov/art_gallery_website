@@ -8,7 +8,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 @Component({
   selector: 'app-contact-page',
   templateUrl: './contact-page.component.html',
-  styleUrls: ['./contact-page.component.css']
+  styleUrls: ['./contact-page.component.scss']
 })
 export class ContactPageComponent implements OnInit {
   public businessEmail = 'rumenplamenovart.business@gmail.com';

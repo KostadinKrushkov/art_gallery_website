@@ -12,7 +12,7 @@ import { BaseFormComponent } from 'src/app/shared/ui/base-form/base-form.compone
 @Component({
   selector: 'app-picture-form',
   templateUrl: './picture-form.component.html',
-  styleUrls: ['./picture-form.component.css']
+  styleUrls: ['./picture-form.component.scss']
 })
 export class PictureFormComponent extends BaseFormComponent {
   public selectedFile: File;

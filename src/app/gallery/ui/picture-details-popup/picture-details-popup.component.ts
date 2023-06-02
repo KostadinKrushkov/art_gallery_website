@@ -6,7 +6,7 @@ import { Picture } from 'src/app/shared/models/entity.models';
 @Component({
   selector: 'app-picture-details-popup',
   templateUrl: './picture-details-popup.component.html',
-  styleUrls: ['./picture-details-popup.component.css']
+  styleUrls: ['./picture-details-popup.component.scss']
 })
 export class PictureDetailsPopupComponent implements OnInit {
   public showDetailsFlag: boolean = false;

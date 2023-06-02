@@ -1,32 +1,47 @@
 <div class="categories-grid">
-  <div *ngFor="let category of categories">
-    <div class="row">
-      <div class="col-2">
+    <div class="row my-3">
+      <div class="col-3">
         <label>Title</label>
+      </div>
+
+      <div class="col-3">
+        <label>Weight</label>
+      </div>
+
+      <div class="col-3">
+        <label>Is subcategory</label>
+      </div>
+
+      <div class="col-3">
+        <label>Enabled</label>
+      </div>
+
+      <hr>
+    </div>
+
+  <div *ngFor="let category of categories">
+    <div class="row justify-content-center mb-5">
+      <div class="col-3">
         <p>{{ category.name }}</p>
       </div>
 
-      <div class="col-2">
-        <label>Weight</label>
+      <div class="col-3">
         <p>{{ category.weight }}</p>
       </div>
 
-      <div class="col-2">
-        <label>Is subcategory</label>
+      <div class="col-3">
         <p>{{ category.is_subcategory === 1 }}</p>
       </div>
 
-      <div class="col-2">
-        <label>Enabled</label>
+      <div class="col-3">
         <p>{{ category.enabled === 1 }}</p>
       </div>
 
-      <div class="col-2">
+      <div class="col-5 my-3">
         <button class="btn btn-primary" (click)="editCategory(category.name)">Edit category</button>
-
       </div>
 
-      <div class="col-2">
+      <div class="col-5 my-3">
         <button class="btn btn-danger" (click)="deleteCategory(category.name)">Delete category</button>
       </div>
 

@@ -7,7 +7,7 @@ import { PopupNotificationsService } from 'src/app/shared/services/popup-notific
 @Component({
   selector: 'app-view-categories-page',
   templateUrl: './view-categories-page.component.html',
-  styleUrls: ['./view-categories-page.component.css']
+  styleUrls: ['./view-categories-page.component.scss']
 })
 export class ViewCategoriesPageComponent implements OnInit {
   public categories: Category[] = [];

@@ -4,7 +4,7 @@ import { FormActionsConstants } from 'src/app/shared/constants/constants';
 @Component({
   selector: 'app-edit-category-page',
   templateUrl: './edit-category-page.component.html',
-  styleUrls: ['./edit-category-page.component.css']
+  styleUrls: ['./edit-category-page.component.scss']
 })
 export class EditCategoryPageComponent implements OnInit {
   public mode = FormActionsConstants.UPDATE

@@ -9,7 +9,7 @@
 
 <mat-icon *ngIf="selectedOptions.length" class="fullscreen-icon clickable" (click)="showPictureDetails(selectedOptions[+actionOptionId])">fullscreen</mat-icon>
 
-<ngb-carousel *ngIf="selectedOptions.length" [interval]="500000000" [activeId]="actionOptionId"  (slide)="onSlide($event)">
+<ngb-carousel *ngIf="selectedOptions.length" [interval]="2500" [activeId]="actionOptionId"  (slide)="onSlide($event)">
 	<ng-template ngbSlide *ngFor="let picture of selectedOptions; let i = index" [id]="'' + i">
 		<div class="picsum-img-wrapper">
       <img src="{{picture.image_format}},{{picture.image}}" alt="ERROR, could not load images. Please review the galery">
@@ -21,11 +21,11 @@
 	</ng-template>
 </ngb-carousel>
 
-<div class="row">
+<div class="row" *ngIf="isAdmin()">
   <app-favourites-multi-select-dropdown class="my-5"
     [options]="options"
     [selectedOptions]="selectedOptions"
     (updateFavouritesEmitter)="updateFavourites($event)"
-    *ngIf="isAdmin()">
+    >
   </app-favourites-multi-select-dropdown>
 </div>

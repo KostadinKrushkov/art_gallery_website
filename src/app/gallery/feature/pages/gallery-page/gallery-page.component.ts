@@ -13,7 +13,7 @@ import { ServerConfigConstants } from 'src/app/shared/constants/constants';
 @Component({
   selector: 'app-gallery-page',
   templateUrl: './gallery-page.component.html',
-  styleUrls: ['./gallery-page.component.css']
+  styleUrls: ['./gallery-page.component.scss']
 })
 export class GalleryPageComponent implements OnInit {
   private cursorPictureTitle: string = '';

@@ -1,7 +1,4 @@
 Possible TODO:
-- Fix UI speed and css for mobile devices (e.g. the favourite images are far too big and are difficult to see anyway, fit them to the screen)
-- Add sliding effect for the header on mobile
-- Improve mobile layout on all pages
 
 
 DONE:
@@ -28,3 +25,8 @@ A: Yes, for larger images above 256kb it's best to store them in NTFS (on hdd) b
 - Check if there is a better component than the ngb carousel to show the home images since it appear to work quite slow -> Maybe just show one image with two arrows and a slide animation
 A: The component was fine, the processing power needed was too high for mobile so compressing the images helped
 - Compress the large images so it works better for mobile -> add flag
+- Fix UI speed and css for mobile devices (e.g. the favourite images are far too big and are difficult to see anyway, fit them to the screen)
+- Add sliding effect for the header on mobile
+- Improve mobile layout on all pages
+- Remove the edit blog button after crate new blog
+- Fix the editing components view on mobile

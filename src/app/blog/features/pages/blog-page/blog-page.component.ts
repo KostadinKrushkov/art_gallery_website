@@ -10,7 +10,7 @@ import { PopupNotificationsService } from 'src/app/shared/services/popup-notific
 @Component({
   selector: 'app-blog-page',
   templateUrl: './blog-page.component.html',
-  styleUrls: ['./blog-page.component.css']
+  styleUrls: ['./blog-page.component.scss']
 })
 export class BlogPageComponent implements OnInit {
   public cursorBlogTitle: string = ''
@@ -32,7 +32,7 @@ export class BlogPageComponent implements OnInit {
       if (blogsToLoad.length !== 0) {
         this.loadedBlogs = [...this.loadedBlogs, ...blogsToLoad];
         this.cursorBlogTitle = blogsToLoad[blogsToLoad.length - 1].title;
-      }
+    }
 
       this.spinner.hide();
       this.is_loading = false

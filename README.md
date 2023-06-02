@@ -4,7 +4,7 @@ _Visit [rumenplamenovart.com](https://rumenplamenovart.com/) to see final result
 This repo is the UI for the art gallery website
 To view the REST API code and database, you can visit https://github.com/KostadinKrushkov/art_gallery_backend
 
-Version 1.4
+Version 1.5
 
 Technologies used for this project
 - Frontend Development: Angular (Typescript), HTML, CSS

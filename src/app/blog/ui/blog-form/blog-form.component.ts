@@ -13,7 +13,7 @@ import { BaseFormComponent } from 'src/app/shared/ui/base-form/base-form.compone
 @Component({
   selector: 'app-blog-form',
   templateUrl: './blog-form.component.html',
-  styleUrls: ['./blog-form.component.css']
+  styleUrls: ['./blog-form.component.scss']
 })
 export class BlogFormComponent extends BaseFormComponent {
   private editorSubject: Subject<any> = new AsyncSubject();

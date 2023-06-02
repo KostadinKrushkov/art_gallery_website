@@ -4,7 +4,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 @Component({
   selector: 'app-selectable-buttons-bar',
   templateUrl: './selectable-buttons-bar.component.html',
-  styleUrls: ['./selectable-buttons-bar.component.css']
+  styleUrls: ['./selectable-buttons-bar.component.scss']
 })
 export class SelectableButtonsBarComponent implements OnInit {
   @Output()

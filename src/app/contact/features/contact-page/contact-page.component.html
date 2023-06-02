@@ -7,60 +7,59 @@
   ><p style="color: white" >Loading...</p>
 </ngx-spinner>
 
-<div class="flex-container additional-info">
-  <div class="mx-5 clickable" (click)="sendToBusinessMail()">
+<div class="card additional-info flex-container mt-5">
+  <div class="mx-auto clickable" (click)="sendToBusinessMail()">
     <span class="material-icons icon">mail</span><span class="ms-2">Business</span>
     <h4>{{ businessEmail }}</h4>
   </div>
 
-  <div class="mx-5 clickable" (click)="sendToPersonalMail()">
+  <div class="mx-auto clickable" (click)="sendToPersonalMail()">
     <span class="material-icons icon">mail</span><span class="ms-2">Personal</span>
     <h4>{{ personalEmail }}</h4>
   </div>
 
-  <div class="mx-5 clickable">
+  <div class="mx-auto clickable">
     <div class="icon">
       <a href="{{instagramURL}}">
-        <i class='fab fa-instagram'><span class="ms-3">@rumenplamenovart</span></i>
+        <i class='fab fa-instagram'><span class="ms-2">rumenplamenovart</span></i>
       </a>
     </div>
   </div>
 
 <form [formGroup]="myForm">
-  <div class="flex-container">
-    <div class="row me-5 mt-5">
-      <div class="row ms-5 d-inline-block">
+    <div class="row mx-auto mt-4">
+      <div class=" mx-auto d-inline-block">
         <div class="col-6 my-1">
           <label>Email address</label>
         </div>
-        <div class="col-6">
+        <div class="col-12">
           <input [formControl]="myForm.controls.email" placeholder="john.doe@mail.com"/>
-          <span class="text-danger" *ngIf="formControl.email.errors && (submitted || formControl['email'].touched)"> *Email is required</span>
+          <span class="text-danger ms-2" *ngIf="formControl.email.errors && (submitted || formControl['email'].touched)">*Email is required</span>
         </div>
       </div>
 
-      <div class="row ms-5 my-4 d-inline-block">
+      <div class=" mx-auto my-3 d-inline-block">
         <div class="col-6 my-1">
           <label>Full name</label>
         </div>
-        <div class="col-6">
+        <div class="col-12">
           <input [formControl]="myForm.controls.name" placeholder="John Doe" [size]=""/>
-          <span class="text-danger" *ngIf="formControl.name.errors && (formControl['name'].touched || submitted)"> *Your name is required</span>
+          <span class="text-danger ms-2" *ngIf="formControl.name.errors && (formControl['name'].touched || submitted)">*Your name is required</span>
         </div>
       </div>
 
-      <div class="row ms-5 my-4 d-inline-block">
+      <div class="mx-auto my-3 d-inline-block">
         <div class="col-6 my-1">
           <label>Your message</label>
         </div>
         <div class="col-6">
-          <textarea [formControl]="myForm.controls.message" rows="15" cols="100"></textarea>
-          <span class="text-danger" *ngIf="(formControl.message.errors) && (formControl['message'].touched || submitted)"> *Message box is required</span>
+          <textarea [formControl]="myForm.controls.message" rows="15" cols="25"></textarea>
+          <span class="text-danger row ms-2" *ngIf="(formControl.message.errors) && (formControl['message'].touched || submitted)">*Message box is required</span>
         </div>
       </div>
     </div>
 
-    <div class="row ms-5">
+    <div class="row mx-auto">
       <div class="col">
         <ngx-recaptcha2
         [siteKey]="siteKey"
@@ -71,7 +70,6 @@
         </div>
       </div>
     </div>
-  </div>
 
-  <button type="submit" class="btn btn-dark center-btn my-4 ms-5" (click)="onSubmit()">Send message</button>
+  <button type="submit" class="btn btn-dark center-btn my-4 mx-auto" (click)="onSubmit()">Send message</button>
 </form>

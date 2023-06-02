@@ -26,7 +26,7 @@ function passwordValidator(control: FormControl) {
 
 @Component({
   templateUrl: './register-page.component.html',
-  styleUrls: ['./register-page.component.css']
+  styleUrls: ['./register-page.component.scss']
 })
 export class RegisterPageComponent implements OnInit {
   public static minPasswordLength = 10;

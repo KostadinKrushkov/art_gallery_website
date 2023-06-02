@@ -12,7 +12,7 @@ import { BrowserUtilities } from 'src/app/shared/utils/utility-functions';
 @Component({
   selector: 'app-blog-row-card',
   templateUrl: './blog-row-card.component.html',
-  styleUrls: ['./blog-row-card.component.css']
+  styleUrls: ['./blog-row-card.component.scss']
 })
 export class BlogRowCardComponent implements OnInit {
 

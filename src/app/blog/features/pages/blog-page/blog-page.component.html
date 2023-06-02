@@ -1,12 +1,7 @@
 <div class="container">
   <div *ngIf="isAdmin()">
-    <div class="row my-5">
-      <div class="col-6">
-        <button routerLink="/blog/new" type="button" class="btn btn-primary">Create new blog</button>
-      </div>
-      <div class="col-6">
-        <button routerLink="/blog/edit/first" type="button" class="btn btn-primary">Edit blog first</button>
-      </div>
+    <div class="row mt-4">
+      <button routerLink="/blog/new" type="button" class="btn btn-primary">Create new blog</button>
     </div>
   </div>
 </div>

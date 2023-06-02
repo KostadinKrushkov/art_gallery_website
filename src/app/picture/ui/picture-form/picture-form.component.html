@@ -2,33 +2,33 @@
 <form [formGroup]="myForm" (ngSubmit)="onSubmit(myForm)">
   <div class="flex-to-center-btn">
     <div>
-      <div class="flex-container py-5">
+      <div class="flex-container py-3">
         <div class="row me-3">
-          <div class="row ms-3 d-inline-block">
-            <div class="col-12 my-2">
+          <div class="row d-inline-block">
+            <div class="col-11 mx-auto my-2">
               <label >Title </label>
             </div>
-            <div class="col-12">
+            <div class="col-11 mx-auto">
               <input formControlName="title" placeholder="Your title">
               <span class="text-danger" *ngIf="(mode === 'CREATE' && registerFormControl['title'].value.length === 0 && (registerFormControl['title'].touched || submitted))"> *Title is required</span>
             </div>
           </div>
 
-          <div class="row ms-3 d-inline-block">
-            <div class="col-12 my-2">
+          <div class="row d-inline-block">
+            <div class="col-11 mx-auto my-2">
               <label>Description </label>
             </div>
-            <div class="col-12">
+            <div class="col-11 mx-auto">
               <textarea formControlName="description" rows="10" cols="50" placeholder="Your description"></textarea>
               <span class="text-danger" *ngIf="(registerFormControl['description'].value.length === 0 && (registerFormControl['description'].touched || submitted))"> *Description is required</span>
             </div>
           </div>
 
-          <div class="row ms-3 d-inline-block">
-            <div class="col-12 my-2">
+          <div class="row d-inline-block">
+            <div class="col-11 mx-auto my-2">
               <label>Category </label>
             </div>
-            <div class="col-12">
+            <div class="col-11 mx-auto">
               <select
                 class="custom-select mb-3"
                 formControlName="category">
@@ -40,16 +40,17 @@
             </div>
           </div>
         </div>
+      </div>
 
-        <div>
-          <div class="flex-image-div">
-            <img class="uploaded-image" *ngIf="this.imgUrl !== null && imagePath == ''" [src]="this.imgUrl" alt="Image" />
-            <div class="row my-5">
-              <img class="uploaded-image" *ngIf="imagePath !== ''" [src]="imgUrl">
-              <span class="text-danger" *ngIf="imageErrorMessage !== ''"> *{{ imageErrorMessage }}</span>
-            </div>
-            <input type="file" (change)="onFileSelect($event)">
-          </div>
+      <div class="flex-image-div my-3 row">
+        <div class="col-10 mx-auto">
+          <img class="uploaded-image " *ngIf="this.imgUrl !== null && imagePath == ''" [src]="this.imgUrl" alt="Image" />
+        </div>
+
+        <div class="col-10 my-3 mx-auto">
+          <img class="uploaded-image" *ngIf="imagePath !== ''" [src]="imgUrl">
+          <span class="text-danger" *ngIf="imageErrorMessage !== ''"> *{{ imageErrorMessage }}</span>
+          <input type="file" (change)="onFileSelect($event)">
         </div>
       </div>
     </div>

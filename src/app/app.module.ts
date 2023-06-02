@@ -1,4 +1,4 @@
-import { HttpClientModule, HttpClientXsrfModule } from '@angular/common/http';
+import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -11,17 +11,10 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NotifierModule } from 'angular-notifier';
 import { JwtHelperService, JWT_OPTIONS  } from '@auth0/angular-jwt';
 
-import { MatSidenavModule } from '@angular/material/sidenav';
-import { MatIconModule } from '@angular/material/icon'
-import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { TINYMCE_SCRIPT_SRC } from '@tinymce/tinymce-angular';
 import { AuthenticationService } from './auth/data-access/authentication.service';
 
-const material = [
-  MatSidenavModule,
-  MatIconModule,
-  MatButtonToggleModule,
-]
+
 
 @NgModule({
   declarations: [
@@ -37,7 +30,6 @@ const material = [
     NotifierModule.withConfig({
       position: { horizontal: { position: 'right' }, vertical: { position: 'top'}}, behaviour: { autoHide: 6000 }
     }),
-    material,
   ],
   providers: [
     { provide: JWT_OPTIONS, useValue: JWT_OPTIONS },

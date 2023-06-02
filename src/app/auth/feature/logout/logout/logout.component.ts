@@ -4,7 +4,7 @@ import { AuthenticationService } from 'src/app/auth/data-access/authentication.s
 
 @Component({
   templateUrl: './logout.component.html',
-  styleUrls: ['./logout.component.css']
+  styleUrls: ['./logout.component.scss']
 })
 export class LogoutComponent implements OnInit {
 

@@ -5,7 +5,7 @@ import { Picture } from 'src/app/shared/models/entity.models';
 @Component({
   selector: 'app-favourites-multi-select-dropdown',
   templateUrl: './favourites-multi-select-dropdown.component.html',
-  styleUrls: ['./favourites-multi-select-dropdown.component.css']
+  styleUrls: ['./favourites-multi-select-dropdown.component.scss']
 })
 export class FavouritesMultiSelectDropdownComponent implements OnInit {
   @Input() options: Picture[] = [];

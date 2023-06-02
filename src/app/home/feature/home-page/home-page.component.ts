@@ -12,7 +12,7 @@ import { DeviceDetectionService } from 'src/app/shared/services/device-detection
 
 @Component({
   templateUrl: './home-page.component.html',
-  styleUrls: ['./home-page.component.css']
+  styleUrls: ['./home-page.component.scss']
 })
 export class HomePageComponent implements OnInit {
   public options: Picture[] = [];
@@ -28,8 +28,8 @@ export class HomePageComponent implements OnInit {
 
   showPictureDetails(picture: Picture) {
     let dialogRef = this.dialog.open(PictureDetailsPopupComponent, {
-      height: '95%',
-      width: '95%',
+      height: '97%',
+      width: '97%',
       data: picture
     });
 
@@ -45,7 +45,7 @@ export class HomePageComponent implements OnInit {
 
     // Loading the favourite pictures to be shown
     const isMobile = this.deviceDetectionService.isMobile();
-    this.dataStorageService.getPicturesForHome(isMobile).subscribe(response => {
+    this.dataStorageService.getPicturesForHome(true).subscribe(response => {
       this.selectedOptions = [];
 
         for (let picture of response.json) {

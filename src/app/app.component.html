@@ -1,12 +1,44 @@
-
 <notifier-container></notifier-container>
-
 <div class="flex-nav-wrapper">
-  <div class="header">
-    <app-header></app-header>
-  </div>
 
-  <div class="container">
-    <router-outlet></router-outlet>
-  </div>
+<mat-toolbar ngxHideOnScroll [classNameWhenHidden]="'toolbar-hidden'" class="hideShowToolbar" color="primary">
+  <mat-toolbar-row>
+    <button *ngIf="showMenuButton" mat-icon-button>
+      <mat-icon (click)="drawer.toggle();">menu</mat-icon>
+    </button>
+
+    <img class="logo" src="/assets/images/rpa_logo.ico" alt="Logo">
+
+    <a class="menu-item clickable" [routerLink]="['/home']"><span>Rumen Plamenov Gallery</span></a>
+    <span class="example-spacer"></span>
+    <div class="menu-options" *ngIf="!showMenuButton">
+      <a class="menu-item clickable" [routerLink]="['/home']"  [ngClass]="{'selected': route === 'home'}">Home</a>
+      <a class="menu-item clickable" [routerLink]="['/gallery']" [ngClass]="{'selected': route === 'gallery'}" >Works</a>
+      <a class="menu-item clickable" [routerLink]="['/blog']" [ngClass]="{'selected': route === 'blog'}" >Writings</a>
+      <a class="menu-item clickable" [routerLink]="['/about']" [ngClass]="{'selected': route === 'about'}" >About</a>
+      <a class="menu-item clickable" [routerLink]="['/contact']" [ngClass]="{'selected': route === 'contact'}" >Contact</a>
+      <a *ngIf="!isLoggedIn()" class="menu-item clickable" [routerLink]="['/auth/login']" [ngClass]="{'selected': route === 'auth/login'}" >Log in</a>
+      <a *ngIf="!isLoggedIn()" class="menu-item clickable" [routerLink]="['/auth/register']" [ngClass]="{'selected': route === 'auth/register'}" >Sign up</a>
+      <a *ngIf="isLoggedIn()" class="menu-item clickable" [routerLink]="['/auth/logout']" >Logout</a>
+    </div>
+  </mat-toolbar-row>
+</mat-toolbar>
+
+<mat-sidenav-container [hasBackdrop]="true">
+ <mat-sidenav class="sidenav" #drawer mode="push">
+  <mat-nav-list>
+    <a class="menu-item clickable" (click)="drawer.close()" [routerLink]="['/home']" [ngClass]="{'selected': route === 'home'}" mat-list-item>Home</a>
+    <a class="menu-item clickable" (click)="drawer.close()" [routerLink]="['/gallery']" [ngClass]="{'selected': route === 'gallery'}" mat-list-item>Works</a>
+    <a class="menu-item clickable" (click)="drawer.close()" [routerLink]="['/blog']" [ngClass]="{'selected': route === 'blog'}" mat-list-item>Writings</a>
+    <a class="menu-item clickable" (click)="drawer.close()" [routerLink]="['/about']" [ngClass]="{'selected': route === 'about'}" mat-list-item>About</a>
+    <a class="menu-item clickable" (click)="drawer.close()" [routerLink]="['/contact']" [ngClass]="{'selected': route === 'contact'}" mat-list-item>Contact</a>
+    <a *ngIf="!isLoggedIn()" (click)="drawer.close()" class="menu-item clickable" [routerLink]="['/auth/login']" [ngClass]="{'selected': route === 'auth/login'}" mat-list-item>Log in</a>
+    <a *ngIf="!isLoggedIn()" (click)="drawer.close()" class="menu-item clickable" [routerLink]="['/auth/register']" [ngClass]="{'selected': route === 'auth/register'}" mat-list-item>Sign up</a>
+    <a *ngIf="isLoggedIn()" (click)="drawer.close()" class="menu-item clickable" [routerLink]="['/auth/logout']" mat-list-item>Logout</a>
+  </mat-nav-list>
+ </mat-sidenav>
+ <mat-sidenav-content class="container my-5">
+   <router-outlet></router-outlet>
+ </mat-sidenav-content>
+</mat-sidenav-container>
 </div>
