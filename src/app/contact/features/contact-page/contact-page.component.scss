@@ -1,0 +1,51 @@
+.fa-instagram {
+  content: '\f16d';
+}
+
+.icon {
+  vertical-align: middle;
+  font-size: 1.5em;
+}
+.text {
+  font-family: "Courier-new";
+}
+.additional-info {
+  display: inline-block;
+  /* margin: 40px;
+  padding: 10px; */
+}
+
+.clickable {
+  cursor: pointer;
+  font-size: 1.3em;
+}
+
+div.clickable {
+  padding-top: 1%;
+}
+
+.clickable:hover {
+  color: rgb(0, 0, 0, 0.4);
+}
+
+a {
+  all: unset;
+}
+
+.card {
+  margin-left: 20%;
+  margin-right: 20%;
+  padding-left: 5%;
+  padding-right: 5%;
+  background-color: #f79dbb;
+}
+
+@media (max-width: 800px) {
+  .card {
+    margin-left: 1%;
+    margin-right: 1%;
+    padding-left: 1%;
+    padding-right: 1%;
+  }
+}
+

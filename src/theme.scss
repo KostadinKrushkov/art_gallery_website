@@ -1,0 +1,63 @@
+@use '@angular/material' as mat;
+@include mat.core();
+// ---
+$rumen-palette: (
+  50: #fce4ec,
+  100: #f5cddb,
+  200: #f79dbb,
+  300: #f06292,
+  A50: #fce4ec,
+  A100: #f5cddb,
+  A200: #f48fb1,
+  A300: #f06292,
+ contrast: (
+  50: rgba(black, 0.87),
+  100: rgba(black, 0.87),
+  200: rgba(black, 0.87),
+  300: white,
+  A50: rgba(black, 0.87),
+  A100: rgba(black, 0.87),
+  A200: rgba(black, 0.87),
+  A300: white,
+ )
+);
+
+$crimson-palette: (
+  50: #ffebef,
+  100: #ffcdc5,
+  200: #eea9ad,
+  300: #e77179,
+  400: #f24e58,
+  500: #f83a40,
+  600: #e9313e,
+  700: #d72638,
+  800: #ca1e30,
+  900: #bb0d24,
+  contrast: (
+    50: rgba(black, 0.87),
+    100: rgba(black, 0.87),
+    200: rgba(black, 0.87),
+    300: rgba(black, 0.87),
+    400: white,
+    500: white,
+    600: white,
+    700: white,
+    800: white,
+    900: white,
+  )
+);
+
+$pink-primary: mat.define-palette($rumen-palette, 200, 100, 300);
+$pink-accent: mat.define-palette($rumen-palette, 300, 200, 100);
+$crimson-warn: mat.define-palette($crimson-palette, 700);
+
+$pink-theme: mat.define-light-theme((
+  color: (
+    primary: $pink-primary,
+    accent: $pink-accent,
+    warn: $crimson-warn,
+  ),
+  typography: mat.define-typography-config(),
+));
+
+@include mat.all-component-themes($pink-theme);

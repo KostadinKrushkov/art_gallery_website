@@ -1,0 +1,93 @@
+body {
+  background-color: #f5cddb;
+}
+
+:host {
+  display: block;
+  position: relative;
+  min-height: 105%;
+  background-color: #f5cddb;
+}
+
+:root {
+  --primary-bg-color: #f5cddb;
+}
+
+mat-sidenav-container {
+  background-color: #f5cddb;
+}
+
+.example-spacer {
+  flex: 1 1 auto;
+}
+
+.sidenav {
+  position: fixed;
+  width: 30%;
+  padding-top: 10%;
+}
+
+.mat-toolbar {
+  position: fixed;
+  top: 0;
+  z-index: 99;
+}
+
+.toolbar {
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  right: 0px;
+  z-index: 10;
+
+  transition: transform 0.3s ease-in-out;
+}
+
+.toolbar-hidden {
+  transform: translateY(-100%);
+}
+
+.menu-item {
+  margin-left: 0.5rem;
+  margin-right: 0.5rem;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+  font-size: medium;
+  text-decoration: none;
+  color: black;
+}
+
+a {
+  padding-bottom: 0.4rem;
+  position: relative;
+  text-decoration: none;
+}
+
+a.selected::before {
+  transform-origin: left;
+  transform: scaleX(1);
+}
+
+a::before {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 3px;
+  border-radius: 4px;
+  background-color: #18272F;
+  bottom: 0;
+  left: 0;
+  transform-origin: right;
+  transform: scaleX(0);
+  transition: transform .3s ease-in-out;
+}
+
+a:hover::before {
+  transform-origin: left;
+  transform: scaleX(1);
+}
+
+.logo {
+  height: 50px;
+  width: 60px;
+}
